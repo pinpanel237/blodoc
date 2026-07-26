@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getAllPosts, getHomePost } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
+import HeroTypewriter from '@/components/HeroTypewriter';
 
 export const dynamic = 'force-static';
 
@@ -20,12 +21,8 @@ export default function HomePage() {
           className="flouna-hero-bg-img"
         />
         <div className="flouna-hero-inner">
-          <h1 className="flouna-hero-title">
-            {homeData.title}
-          </h1>
-          <p className="flouna-hero-desc">
-            {homeData.description}
-          </p>
+          {/* 3-3. 타이핑 효과 히어로 타이틀 */}
+          <HeroTypewriter title={homeData.title} description={homeData.description} />
         </div>
       </section>
 

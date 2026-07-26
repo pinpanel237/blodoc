@@ -5,6 +5,8 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import gfm from 'remark-gfm';
 import TOC from '@/components/TOC';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import CodeCopyButtons from '@/components/CodeCopyButtons';
 
 export const dynamic = 'force-static';
 export const dynamicParams = true;
@@ -46,6 +48,9 @@ export default async function PostPage({
 
   return (
     <div className="astryx-theme-root">
+      {/* 📖 스크롤 읽기 진행률 바 */}
+      <ReadingProgressBar />
+
       {/* 🌿 포스트 상단 감성 비주얼 배경 헤더 배너 (Post Hero Cover Header) */}
       <section className="post-hero-banner">
         <img
@@ -79,6 +84,8 @@ export default async function PostPage({
               className="markdown-body"
               dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
+            {/* 🖱️ 코드 블록 복사 버튼 동적 주입 */}
+            <CodeCopyButtons />
           </article>
 
           <TOC />
