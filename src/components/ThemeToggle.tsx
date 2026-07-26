@@ -22,11 +22,12 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
+      className="theme-btn"
       style={{
         background: 'none',
         border: '1px solid var(--border-color)',
         borderRadius: '2rem',
-        padding: '0.4rem 0.8rem',
+        padding: '0.4rem 0.85rem',
         cursor: 'pointer',
         color: 'var(--text-primary)',
         fontSize: '0.85rem',
@@ -34,6 +35,7 @@ export default function ThemeToggle() {
         display: 'flex',
         alignItems: 'center',
         gap: '0.4rem',
+        transition: 'all 0.25s ease',
       }}
       aria-label="Theme toggle"
     >

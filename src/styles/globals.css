@@ -9,13 +9,13 @@
   --bg-card: rgba(15, 20, 31, 0.85);
   --bg-card-hover: rgba(26, 34, 51, 0.95);
   --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
+  --text-secondary: #CBD5E1;
   --text-muted: #64748B;
   --border-color: rgba(255, 255, 255, 0.1);
   --accent-indigo: #6366F1;
   --accent-purple: #A855F7;
   --accent-pink: #EC4899;
-  --gradient-aurora: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
+  --gradient-aurora: linear-gradient(135deg, #818CF8 0%, #C084FC 50%, #F472B6 100%);
   --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
   --header-bg: rgba(7, 9, 14, 0.85);
   --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
@@ -79,11 +79,29 @@ body {
   transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
 }
 
+/* 🌟 최상단 투명 헤더일 때 글씨 가독성 극대화 (선명한 화이트/그라데이션) */
 .site-header.transparent {
   background: transparent;
   border-bottom: 1px solid transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+.site-header.transparent .nav-item {
+  color: #F8FAFC !important;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.site-header.transparent .nav-item:hover {
+  color: #A855F7 !important;
+}
+
+.site-header.transparent .theme-btn {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
 }
 
 .site-header.scrolled {
