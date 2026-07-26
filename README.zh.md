@@ -1,8 +1,8 @@
 # 🌿 blodoc - Obsidian & Next.js Pure SSG Blog
 
 <p align="center">
-  <a href="README.md"><b>한국어</b></a> |
-  <a href="README.en.md"><b>English</b></a> |
+  <a href="README.md"><b>English</b></a> |
+  <a href="README.ko.md"><b>한국어</b></a> |
   <a href="README.ja.md"><b>日本語</b></a> |
   <a href="README.zh.md"><b>中文</b></a>
 </p>
@@ -47,9 +47,3 @@ npm run build
 - **博客文章**: 将 Markdown 笔记放置在 `content/posts/*.md` 目录下。
 - **首页与布局配置**: 可在 `content/layout/home.md` 中修改首页横幅标题、说明文字及 GitHub 链接。
 - **图片附件**: 将图片放入 `content/assets/`，构建时会自动同步至 `public/assets/`。
-
----
-
-## 📄 版权与致谢
-
-- **模板原作者**: [pinpanel237](https://github.com/pinpanel237)

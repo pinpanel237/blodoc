@@ -1,8 +1,8 @@
 # 🌿 blodoc - Obsidian & Next.js Pure SSG Blog
 
 <p align="center">
-  <a href="README.md"><b>한국어</b></a> |
-  <a href="README.en.md"><b>English</b></a> |
+  <a href="README.md"><b>English</b></a> |
+  <a href="README.ko.md"><b>한국어</b></a> |
   <a href="README.ja.md"><b>日本語</b></a> |
   <a href="README.zh.md"><b>中文</b></a>
 </p>
@@ -47,9 +47,3 @@ npm run build
 - **ブログ記事**: `content/posts/*.md` 内にマークダウンノートを配置します。
 - **メインバナー & レイアウト設定**: `content/layout/home.md` ファイルでメインバナーのタイトル、説明文、GitHubリンクを変更できます。
 - **添付画像**: `content/assets/` に画像を配置すると、ビルド時に `public/assets/` へ自動コピーされます。
-
----
-
-## 📄 クレジット表示
-
-- **テンプレート制作者**: [pinpanel237](https://github.com/pinpanel237)
