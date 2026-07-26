@@ -84,9 +84,9 @@ body {
 }
 
 .header-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 1.25rem 1.5rem;
+  padding: 1.25rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -123,129 +123,144 @@ body {
 
 /* Container */
 .main-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
+  padding: 2rem 2rem 5rem;
   position: relative;
   z-index: 1;
 }
 
-/* 🚀 3D Visual Hero Showcase Banner */
-.showcase-banner {
+/* 🌿 Dribbble Flouna Style Expansive Airy Hero Canvas */
+.flouna-hero-canvas {
   position: relative;
-  border-radius: 1.75rem;
+  border-radius: 2rem;
   overflow: hidden;
-  margin-bottom: 3rem;
-  min-height: 340px;
+  margin-bottom: 4rem;
+  min-height: 440px;
   display: flex;
   align-items: center;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-glow);
-  background: #090C15;
-}
-
-.banner-bg-img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 60%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.85;
-  mask-image: linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(145deg, #090D18 0%, #0F1424 100%);
+  padding: 4.5rem 3.5rem;
 }
 
 @media (max-width: 768px) {
-  .banner-bg-img {
+  .flouna-hero-canvas {
+    padding: 2.5rem 1.5rem;
+    min-height: auto;
+  }
+}
+
+.flouna-hero-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+}
+
+@media (max-width: 900px) {
+  .flouna-hero-bg {
     width: 100%;
-    opacity: 0.35;
+    opacity: 0.25;
     mask-image: none;
     -webkit-mask-image: none;
   }
 }
 
-.banner-content {
+.flouna-hero-content {
   position: relative;
   z-index: 2;
-  padding: 3rem;
-  max-width: 620px;
+  max-width: 680px;
 }
 
-.banner-pill {
+.flouna-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
+  gap: 0.6rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--accent-indigo);
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(99, 102, 241, 0.12);
   border: 1px solid rgba(99, 102, 241, 0.3);
-  padding: 0.35rem 0.9rem;
+  padding: 0.4rem 1.1rem;
   border-radius: 2rem;
-  margin-bottom: 1.25rem;
-  backdrop-filter: blur(8px);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(12px);
 }
 
-.banner-title {
-  font-size: 2.5rem;
+.flouna-hero-title {
+  font-size: 3.6rem;
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.12;
   letter-spacing: -0.04em;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   color: #FFFFFF;
 }
 
-.banner-title-gradient {
+@media (max-width: 768px) {
+  .flouna-hero-title {
+    font-size: 2.4rem;
+  }
+}
+
+.flouna-title-gradient {
   background: var(--gradient-aurora);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.banner-desc {
-  font-size: 1.05rem;
+.flouna-hero-desc {
+  font-size: 1.15rem;
   color: #94A3B8;
-  line-height: 1.6;
-  margin-bottom: 1.75rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 580px;
 }
 
-.banner-cta-group {
+.flouna-cta-group {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .btn-primary {
   background: var(--gradient-aurora);
   color: #FFFFFF;
   font-weight: 700;
-  font-size: 0.9rem;
-  padding: 0.7rem 1.4rem;
-  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 1rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  gap: 0.6rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 25px rgba(99, 102, 241, 0.45);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(99, 102, 241, 0.65);
 }
 
 .btn-secondary {
   background: rgba(255, 255, 255, 0.08);
   color: #F8FAFC;
   font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.7rem 1.4rem;
-  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 1rem;
   border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
-  transition: background 0.2s ease;
+  backdrop-filter: blur(12px);
+  transition: background 0.25s ease;
 }
 
 .btn-secondary:hover {
@@ -256,8 +271,8 @@ body {
 .bento-hero-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 1.75rem;
-  margin-bottom: 3.5rem;
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 @media (max-width: 900px) {
@@ -288,7 +303,7 @@ body {
 
 .bento-img-container {
   width: 100%;
-  height: 260px;
+  height: 280px;
   overflow: hidden;
   position: relative;
 }
@@ -383,7 +398,7 @@ body {
 .chip-btn {
   font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.5rem 1.1rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 2rem;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
@@ -403,7 +418,7 @@ body {
 /* Dribbble Visual Posts Grid */
 .dribbble-posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 2rem;
 }
 
@@ -428,7 +443,7 @@ body {
 
 .card-img-wrapper {
   width: 100%;
-  height: 200px;
+  height: 210px;
   overflow: hidden;
   position: relative;
   background: rgba(99, 102, 241, 0.05);
@@ -475,7 +490,7 @@ body {
 }
 
 .footer-grid {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -512,7 +527,7 @@ body {
 }
 
 .footer-bottom {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;

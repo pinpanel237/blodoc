@@ -11,35 +11,35 @@ export default function HomePage() {
 
   return (
     <div className="astryx-theme-root">
-      {/* 🚀 3D Visual Hero Showcase Banner */}
-      <section className="showcase-banner astryx-banner">
+      {/* 🌿 Dribbble Flouna Style Expansive Airy Hero Canvas */}
+      <section className="flouna-hero-canvas astryx-banner">
         <img
           src="/assets/hero-banner.png"
           alt="Obsidian Digital Garden Hero Banner"
-          className="banner-bg-img"
+          className="flouna-hero-bg"
         />
-        <div className="banner-content">
-          <div className="banner-pill astryx-badge-pill">
-            ✨ Obsidian Automatic Sync Engine v1.0
+        <div className="flouna-hero-content">
+          <div className="flouna-badge astryx-badge-pill">
+            🌱 Obsidian Digital Garden & Editorial Space
           </div>
-          <h1 className="banner-title">
-            생각과 노트를 한눈에 <br />
-            <span className="banner-title-gradient">디지털 가든으로 발행하세요</span>
+          <h1 className="flouna-hero-title">
+            생각의 파편을 <br />
+            <span className="flouna-title-gradient">시원하고 깊이 있게 기록합니다</span>
           </h1>
-          <p className="banner-desc">
-            옵시디언 마크다운 노트를 GitHub 저장소에 푸시하면 Vercel SSG 파이프라인을 통해 초고속 정적 블로그로 자동 변환됩니다.
+          <p className="flouna-hero-desc">
+            옵시디언 마크다운 노트를 GitHub 저장소에 푸시하면 Vercel 정적 파이프라인을 통해 탁 트인 감성적인 디지털 가든으로 자동 발행됩니다.
           </p>
-          <div className="banner-cta-group">
+          <div className="flouna-cta-group">
             <Link href="#posts" className="btn-primary astryx-btn-primary">
-              🚀 포스트 구경하기
+              🚀 스토리 둘러보기
             </Link>
             <a
-              href="https://github.com"
+              href="https://github.com/pinpanel237/blodoc"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary astryx-btn-secondary"
             >
-              📖 Obsidian Setup 가이드
+              📖 GitHub 저장소 구경하기
             </a>
           </div>
         </div>
