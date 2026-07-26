@@ -22,7 +22,6 @@ export default async function PostPage({
 }: {
   params: Promise<{ slug: string }> | { slug: string };
 }) {
-  // Next.js 16 호환: params가 Promise일 수 있으므로 await 처리
   const resolvedParams = await params;
   const slug = resolvedParams?.slug;
 
@@ -48,14 +47,14 @@ export default async function PostPage({
   const contentHtml = processedContent.toString();
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem' }}>
+    <div className="main-container post-detail-container" style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem', paddingTop: '6.5rem' }}>
       <article>
-        <header style={{ marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
+        <header style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.75rem' }}>
           <span className="card-category astryx-badge">{post.category}</span>
-          <h1 style={{ fontSize: '2.4rem', fontWeight: 800, margin: '0.5rem 0', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: '2.6rem', fontWeight: 900, margin: '0.75rem 0', lineHeight: 1.25, letterSpacing: '-0.03em' }}>
             {post.title}
           </h1>
-          <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+          <div style={{ display: 'flex', gap: '1.25rem', color: 'var(--text-muted)', fontSize: '0.925rem' }}>
             <span>📅 {post.date}</span>
             <span>🏷️ {post.tags.join(', ')}</span>
           </div>

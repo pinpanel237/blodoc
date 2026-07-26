@@ -69,7 +69,7 @@ body {
   z-index: 0;
 }
 
-/* Dynamic Transparent / Glass Header (그림자 제거) */
+/* Dynamic Transparent / Glass Header */
 .site-header {
   position: fixed;
   top: 0;
@@ -149,7 +149,7 @@ body {
   color: var(--text-primary);
 }
 
-/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas (그림자 제거) */
+/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas (전체 화면 너비) */
 .flouna-full-bleed-hero {
   position: relative;
   width: 100%;
@@ -161,15 +161,15 @@ body {
   justify-content: center;
   overflow: hidden;
   margin-bottom: 3.5rem;
-  padding-top: 5rem;
-  box-shadow: none !important; /* 상단 패널 그림자 제거 */
+  padding-top: 6rem; /* 헤더 고정 겹침 방지 여백 */
+  box-shadow: none !important;
 }
 
 .flouna-hero-inner {
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 5rem 2rem;
+  padding: 4rem 2rem 5rem;
   position: relative;
   z-index: 2;
 }
@@ -290,6 +290,10 @@ body {
   padding: 0 2rem 5rem;
   position: relative;
   z-index: 1;
+}
+
+.post-detail-container {
+  padding-top: 7rem !important; /* 포스트 상세 헤더 겹침 완벽 방지 여백 */
 }
 
 /* Dribbble Bento Grid Section */
