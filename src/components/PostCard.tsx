@@ -14,7 +14,7 @@ export default function PostCard({ post }: { post: PostMetaData }) {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
             <span className="card-category astryx-badge">{post.category}</span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>⏱️ 3 min read</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>3분 읽기</span>
           </div>
 
           <h3 className="card-title">{post.title}</h3>

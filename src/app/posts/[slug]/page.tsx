@@ -16,7 +16,6 @@ export async function generateStaticParams() {
   }));
 }
 
-// Next.js 15/16 App Router 비동기 params 처리 (Promise)
 export default async function PostPage({
   params,
 }: {
@@ -35,10 +34,8 @@ export default async function PostPage({
     notFound();
   }
 
-  // 1. Obsidian 문법 파싱 (Wikilink, Callout, Asset 이미지)
   const obsidianParsed = parseObsidianMarkdown(post.content);
 
-  // 2. Remark -> HTML 변환
   const processedContent = await remark()
     .use(gfm)
     .use(html, { sanitize: false })
@@ -47,7 +44,7 @@ export default async function PostPage({
   const contentHtml = processedContent.toString();
 
   return (
-    <div className="main-container post-detail-container" style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem', paddingTop: '6.5rem' }}>
+    <div className="main-container post-detail-container" style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem', paddingTop: '5.5rem' }}>
       <article>
         <header style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.75rem' }}>
           <span className="card-category astryx-badge">{post.category}</span>
@@ -55,8 +52,8 @@ export default async function PostPage({
             {post.title}
           </h1>
           <div style={{ display: 'flex', gap: '1.25rem', color: 'var(--text-muted)', fontSize: '0.925rem' }}>
-            <span>📅 {post.date}</span>
-            <span>🏷️ {post.tags.join(', ')}</span>
+            <span>작성일: {post.date}</span>
+            <span>태그: {post.tags.join(', ')}</span>
           </div>
         </header>
 

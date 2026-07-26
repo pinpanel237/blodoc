@@ -13,12 +13,12 @@ export default function Header() {
     <header className={`site-header ${isHomePage ? 'header-on-home' : 'header-on-post'}`}>
       <div className="header-container">
         <Link href="/" className="logo-text">
-          ✨ {siteConfig.title}
+          {siteConfig.title}
         </Link>
 
         <nav className="nav-links">
           <Link href="/" className="nav-item">
-            Posts
+            포스트
           </Link>
           {siteConfig.social.github && (
             <a

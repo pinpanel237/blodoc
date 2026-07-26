@@ -11,27 +11,27 @@ export default function HomePage() {
 
   return (
     <div className="astryx-theme-root">
-      {/* 1️⃣ [상단 히로 배너 섹션] 🚀 플랫폼 안내 및 동기화 소개 */}
+      {/* 1. 상단 히로 배너 섹션 (일반적인 텍스트) */}
       <section className="flouna-full-bleed-hero astryx-banner">
         <img
           src="/assets/hero-banner.png"
-          alt="Obsidian Digital Garden Hero Banner"
+          alt="Blog Hero Banner"
           className="flouna-hero-bg-img"
         />
         <div className="flouna-hero-inner">
           <div className="flouna-badge astryx-badge-pill">
-            🌱 Obsidian Digital Garden & Editorial Space
+            개인 기술 블로그 & 기록 공간
           </div>
           <h1 className="flouna-hero-title">
-            생각의 파편을 <br />
-            <span className="flouna-title-gradient">시원하고 깊이 있게 기록합니다</span>
+            생각과 기록을 정리하는 <br />
+            <span className="flouna-title-gradient">개인 블로그입니다</span>
           </h1>
           <p className="flouna-hero-desc">
-            옵시디언 마크다운 노트를 GitHub 저장소에 푸시하면 Vercel 정적 파이프라인을 통해 탁 트인 감성적인 디지털 가든으로 자동 발행됩니다.
+            옵시디언에서 작성한 마크다운 노트를 기반으로 정적 페이지를 자동 생성하여 작성된 블로그 공간입니다.
           </p>
           <div className="flouna-cta-group">
-            <Link href="#featured" className="btn-primary astryx-btn-primary">
-              🚀 추천 포스트 읽기
+            <Link href="#posts" className="btn-primary astryx-btn-primary">
+              포스트 목록 보기
             </Link>
             <a
               href="https://github.com/pinpanel237/blodoc"
@@ -39,26 +39,23 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="btn-secondary astryx-btn-secondary"
             >
-              📖 GitHub 저장소 구경하기
+              GitHub 저장소
             </a>
           </div>
         </div>
       </section>
 
       <div className="main-container">
-        {/* 2️⃣ [추목할 스토리 섹션] 🔥 Featured & Highlight Articles */}
+        {/* 2. 주요 포스트 섹션 */}
         {featuredPost && (
-          <section id="featured" style={{ marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
-              <div style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-indigo)', marginBottom: '0.3rem' }}>
-                HIGHLIGHTED STORIES
-              </div>
+          <section id="posts" style={{ marginBottom: '4rem' }}>
+            <div style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-                <h2 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.03em' }}>
-                  🔥 주목할 대표 이야기 (Featured Articles)
+                <h2 style={{ fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
+                  주요 포스트
                 </h2>
-                <p style={{ fontSize: '0.925rem', color: 'var(--text-secondary)' }}>
-                  가장 깊이 있게 다루어진 이 주의 메인 아티클입니다.
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  최근 작성된 대표 포스트 목록입니다.
                 </p>
               </div>
             </div>
@@ -75,7 +72,7 @@ export default function HomePage() {
                 </div>
                 <div className="bento-content">
                   <div>
-                    <span className="badge-featured astryx-badge-pill">🔥 Main Highlight</span>
+                    <span className="badge-featured astryx-badge-pill">대표 포스트</span>
                     <h3 className="featured-title">{featuredPost.title}</h3>
                     <p className="featured-summary">{featuredPost.summary}</p>
                   </div>
@@ -84,7 +81,7 @@ export default function HomePage() {
                       <div className="author-avatar">OP</div>
                       <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{featuredPost.date}</span>
                     </div>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>⏱️ 5 min read</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>3분 읽기</span>
                   </div>
                 </div>
               </Link>
@@ -114,7 +111,7 @@ export default function HomePage() {
                 {subPosts.length < 2 && (
                   <div className="bento-card-sub astryx-card-sub" style={{ background: 'var(--gradient-glow)', justifyContent: 'center', textAlign: 'center' }}>
                     <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.4rem' }}>
-                      🌿 Obsidian Digital Garden
+                      블로그 메모
                     </h4>
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                       옵시디언 마크다운 노트를 GitHub에 푸시하여 실시간으로 발행하세요.
@@ -126,32 +123,29 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 3️⃣ [카테고리 탐색 & 전체 글 리스트 섹션] 📚 All Published Articles */}
-        <section id="articles">
-          <div style={{ marginBottom: '1.5rem' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-purple)', marginBottom: '0.3rem' }}>
-              ALL ARTICLES & TOPICS
-            </div>
+        {/* 3. 전체 포스트 섹션 */}
+        <section id="all-articles">
+          <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.03em' }}>
-                📚 전체 포스트 탐색 (All Articles)
+              <h2 style={{ fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
+                전체 포스트
               </h2>
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                총 {posts.length}개의 마크다운 노트
+              <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                총 {posts.length}개의 포스트
               </span>
             </div>
           </div>
 
-          {/* 🏷️ Category Filter Chips Bar */}
+          {/* 카테고리 필터 바 */}
           <div className="category-filter-bar" style={{ marginBottom: '2.5rem' }}>
-            <button className="chip-btn astryx-chip active">✨ 전체 (All)</button>
-            <button className="chip-btn astryx-chip">🔮 Obsidian 사용법</button>
-            <button className="chip-btn astryx-chip">⚡ Next.js / 웹 개발</button>
-            <button className="chip-btn astryx-chip">🎨 디자인 시스템</button>
-            <button className="chip-btn astryx-chip">💻 개발 일지</button>
+            <button className="chip-btn astryx-chip active">전체</button>
+            <button className="chip-btn astryx-chip">옵시디언</button>
+            <button className="chip-btn astryx-chip">웹 개발</button>
+            <button className="chip-btn astryx-chip">디자인</button>
+            <button className="chip-btn astryx-chip">일반</button>
           </div>
 
-          {/* 📰 Dribbble Visual Card Grid */}
+          {/* 포스트 카드 그리드 */}
           <div className="dribbble-posts-grid">
             {posts.map((post) => (
               <PostCard key={post.slug} post={post} />
