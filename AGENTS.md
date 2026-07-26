@@ -16,6 +16,7 @@ WORKFLOW — discover, don't guess. Before writing UI:
 3. `astryx component <Name>` — props + examples for every component you use.
 
 RULES:
+- **GIT RULE**: 사용자의 명시적인 지시나 요청이 없을 때는 자의적으로 `git commit`이나 `git push` 명령을 절대 수행하지 않습니다.
 - No <div> — components do all layout/spacing. Full page → AppShell; sidebar nav → SideNav.
 - Frame first: pick the shell (AppShell / Layout+LayoutPanel) and budget regions in px BEFORE writing content (`astryx docs layout`).
 - Dense data = rows (Table, List/Item) edge-to-edge — never Card-wrapped list items. Card = dashboard widgets, galleries, settings groups only.
