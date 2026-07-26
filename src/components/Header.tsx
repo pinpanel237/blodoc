@@ -1,28 +1,10 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { siteConfig } from '@/site.config';
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header className={`site-header ${isScrolled ? 'scrolled' : 'transparent'}`}>
+    <header className="site-header">
       <div className="header-container">
         <Link href="/" className="logo-text">
           ✨ {siteConfig.title}
