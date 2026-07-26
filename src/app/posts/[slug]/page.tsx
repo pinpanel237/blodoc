@@ -7,7 +7,7 @@ import gfm from 'remark-gfm';
 import TOC from '@/components/TOC';
 
 export const dynamic = 'force-static';
-export const dynamicParams = true; // 로컬 개발 시 새로운 .md 추가 시 바로 인식되도록 dynamicParams 허용
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -16,8 +16,21 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+// Next.js 15/16 App Router 비동기 params 처리 (Promise)
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }> | { slug: string };
+}) {
+  // Next.js 16 호환: params가 Promise일 수 있으므로 await 처리
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
+
+  if (!slug) {
+    notFound();
+  }
+
+  const post = getPostBySlug(slug);
 
   if (!post) {
     notFound();
