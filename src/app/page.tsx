@@ -46,16 +46,16 @@ export default function HomePage() {
       </section>
 
       <div className="main-container">
-        {/* 2. 주요 포스트 섹션 */}
+        {/* 2. 최신 포스트 섹션 */}
         {featuredPost && (
           <section id="posts" style={{ marginBottom: '4rem' }}>
             <div style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
                 <h2 style={{ fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
-                  주요 포스트
+                  최신 포스트
                 </h2>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  최근 작성된 대표 포스트 목록입니다.
+                  최근 작성된 포스트 목록입니다.
                 </p>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
                 </div>
                 <div className="bento-content">
                   <div>
-                    <span className="badge-featured astryx-badge-pill">대표 포스트</span>
+                    <span className="badge-featured astryx-badge-pill">최신 포스트</span>
                     <h3 className="featured-title">{featuredPost.title}</h3>
                     <p className="featured-summary">{featuredPost.summary}</p>
                   </div>
