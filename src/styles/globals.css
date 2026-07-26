@@ -69,7 +69,7 @@ body {
   z-index: 0;
 }
 
-/* 🌿 스크롤 시 따라오지 않는 일반 상단 헤더 (Static Absolute Header) */
+/* 🌿 상단 헤더 (테마 및 배경 대비 적응형 폰트 색상) */
 .site-header {
   position: absolute;
   top: 0;
@@ -82,20 +82,19 @@ body {
 }
 
 .site-header .nav-item {
-  color: #F8FAFC !important;
-  font-weight: 700;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  color: var(--text-primary);
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .site-header .nav-item:hover {
-  color: #A855F7 !important;
+  color: var(--accent-indigo);
 }
 
 .site-header .theme-btn {
-  color: #FFFFFF !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(8px);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background: var(--bg-card);
 }
 
 .header-container {
@@ -280,7 +279,7 @@ body {
 }
 
 .post-detail-container {
-  padding-top: 5rem !important;
+  padding-top: 5.5rem !important;
 }
 
 /* Dribbble Bento Grid Section */
