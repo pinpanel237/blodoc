@@ -7,7 +7,7 @@ import gfm from 'remark-gfm';
 import TOC from '@/components/TOC';
 
 export const dynamic = 'force-static';
-export const dynamicParams = false;
+export const dynamicParams = true; // 로컬 개발 시 새로운 .md 추가 시 바로 인식되도록 dynamicParams 허용
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -38,7 +38,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem' }}>
       <article>
         <header style={{ marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
-          <span className="card-category">{post.category}</span>
+          <span className="card-category astryx-badge">{post.category}</span>
           <h1 style={{ fontSize: '2.4rem', fontWeight: 800, margin: '0.5rem 0', lineHeight: 1.2 }}>
             {post.title}
           </h1>
