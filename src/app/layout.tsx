@@ -44,7 +44,7 @@ export default function RootLayout({
       <body>
         <div className="ambient-glow" />
         <Header />
-        <main className="main-container">{children}</main>
+        <main>{children}</main>
 
         {/* 🏛️ Astryx Style Clean Editorial Footer with License Attribution */}
         <footer className="astryx-footer">
@@ -62,7 +62,7 @@ export default function RootLayout({
               <div className="footer-title">Navigation</div>
               <Link href="/">Home</Link>
               <Link href="#posts">All Posts</Link>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://github.com/pinpanel237/blodoc" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
 
             <div className="footer-links-group">

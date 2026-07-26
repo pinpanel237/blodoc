@@ -3,44 +3,42 @@
 @import "@astryxdesign/theme-neutral/theme.css";
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-primary: #07090E;
-    --bg-secondary: #0F141F;
-    --bg-card: rgba(15, 20, 31, 0.75);
-    --bg-card-hover: rgba(26, 34, 51, 0.9);
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
-    --text-muted: #64748B;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --accent-indigo: #6366F1;
-    --accent-purple: #A855F7;
-    --accent-pink: #EC4899;
-    --gradient-aurora: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
-    --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
-    --header-bg: rgba(7, 9, 14, 0.8);
-    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 35px rgba(129, 140, 248, 0.25);
-  }
+:root {
+  --bg-primary: #07090E;
+  --bg-secondary: #0F141F;
+  --bg-card: rgba(15, 20, 31, 0.85);
+  --bg-card-hover: rgba(26, 34, 51, 0.95);
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-indigo: #6366F1;
+  --accent-purple: #A855F7;
+  --accent-pink: #EC4899;
+  --gradient-aurora: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+  --header-bg: rgba(7, 9, 14, 0.85);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 45px rgba(129, 140, 248, 0.3);
+}
 
-  [data-theme='light'] {
-    --bg-primary: #F1F5F9;
-    --bg-secondary: #FFFFFF;
-    --bg-card: rgba(255, 255, 255, 0.9);
-    --bg-card-hover: #FFFFFF;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --accent-indigo: #4F46E5;
-    --accent-purple: #9333EA;
-    --accent-pink: #DB2777;
-    --gradient-aurora: linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #DB2777 100%);
-    --gradient-glow: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(147, 51, 234, 0.1));
-    --header-bg: rgba(241, 245, 249, 0.85);
-    --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    --shadow-glow: 0 10px 30px rgba(79, 70, 229, 0.15);
-  }
+[data-theme='light'] {
+  --bg-primary: #F1F5F9;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --accent-indigo: #4F46E5;
+  --accent-purple: #9333EA;
+  --accent-pink: #DB2777;
+  --gradient-aurora: linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #DB2777 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(147, 51, 234, 0.1));
+  --header-bg: rgba(241, 245, 249, 0.85);
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 10px 30px rgba(79, 70, 229, 0.15);
 }
 
 * {
@@ -55,7 +53,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Inter", sans-serif;
   line-height: 1.6;
   min-height: 100vh;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Background Aurora Radial */
@@ -64,10 +61,10 @@ body {
   top: -200px;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(168, 85, 247, 0.1) 45%, transparent 70%);
-  filter: blur(90px);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.12) 45%, transparent 70%);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
@@ -121,42 +118,35 @@ body {
   color: var(--text-primary);
 }
 
-/* Container */
-.main-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem 2rem 5rem;
+/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas (전체 화면 너비) */
+.flouna-full-bleed-hero {
   position: relative;
-  z-index: 1;
-}
-
-/* 🌿 Dribbble Flouna Style Expansive Airy Hero Canvas */
-.flouna-hero-canvas {
-  position: relative;
-  border-radius: 2rem;
-  overflow: hidden;
-  margin-bottom: 4rem;
-  min-height: 440px;
+  width: 100%;
+  min-height: 520px;
+  background: linear-gradient(135deg, #090E1A 0%, #111728 50%, #0A0D16 100%);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-glow);
-  background: linear-gradient(145deg, #090D18 0%, #0F1424 100%);
-  padding: 4.5rem 3.5rem;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-@media (max-width: 768px) {
-  .flouna-hero-canvas {
-    padding: 2.5rem 1.5rem;
-    min-height: auto;
-  }
+.flouna-hero-inner {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  position: relative;
+  z-index: 2;
 }
 
-.flouna-hero-bg {
+.flouna-hero-bg-img {
   position: absolute;
   top: 0;
   right: 0;
-  width: 65%;
+  width: 60%;
   height: 100%;
   object-fit: cover;
   opacity: 0.85;
@@ -165,7 +155,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .flouna-hero-bg {
+  .flouna-hero-bg-img {
     width: 100%;
     opacity: 0.25;
     mask-image: none;
@@ -173,41 +163,36 @@ body {
   }
 }
 
-.flouna-hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 680px;
-}
-
 .flouna-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--accent-indigo);
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  padding: 0.4rem 1.1rem;
+  color: #818CF8;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  padding: 0.45rem 1.25rem;
   border-radius: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   backdrop-filter: blur(12px);
 }
 
 .flouna-hero-title {
-  font-size: 3.6rem;
+  font-size: 4.2rem;
   font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: -0.04em;
-  margin-bottom: 1.25rem;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  margin-bottom: 1.5rem;
   color: #FFFFFF;
+  max-width: 750px;
 }
 
 @media (max-width: 768px) {
   .flouna-hero-title {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
   }
 }
 
@@ -218,11 +203,11 @@ body {
 }
 
 .flouna-hero-desc {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: #94A3B8;
-  line-height: 1.65;
-  margin-bottom: 2rem;
-  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 2.25rem;
+  max-width: 620px;
 }
 
 .flouna-cta-group {
@@ -236,8 +221,8 @@ body {
   background: var(--gradient-aurora);
   color: #FFFFFF;
   font-weight: 700;
-  font-size: 0.95rem;
-  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
   border-radius: 1rem;
   display: inline-flex;
   align-items: center;
@@ -255,8 +240,8 @@ body {
   background: rgba(255, 255, 255, 0.08);
   color: #F8FAFC;
   font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
   border-radius: 1rem;
   border: 1px solid var(--border-color);
   backdrop-filter: blur(12px);
@@ -265,6 +250,15 @@ body {
 
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+
+/* Container */
+.main-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Dribbble Bento Grid Section */
