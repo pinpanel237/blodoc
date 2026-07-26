@@ -18,8 +18,8 @@
   --gradient-aurora: linear-gradient(135deg, #818CF8 0%, #C084FC 50%, #F472B6 100%);
   --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
   --header-bg: rgba(7, 9, 14, 0.85);
-  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 45px rgba(129, 140, 248, 0.3);
+  --shadow-card: none;
+  --shadow-glow: none;
 }
 
 [data-theme='light'] {
@@ -37,8 +37,8 @@
   --gradient-aurora: linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #DB2777 100%);
   --gradient-glow: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(147, 51, 234, 0.1));
   --header-bg: rgba(241, 245, 249, 0.85);
-  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 10px 30px rgba(79, 70, 229, 0.15);
+  --shadow-card: none;
+  --shadow-glow: none;
 }
 
 * {
@@ -69,17 +69,17 @@ body {
   z-index: 0;
 }
 
-/* Dynamic Transparent / Glass Header */
+/* Dynamic Transparent / Glass Header (그림자 제거) */
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 50;
+  box-shadow: none !important;
   transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
 }
 
-/* 🌟 최상단 투명 헤더일 때 글씨 가독성 극대화 (선명한 화이트/그라데이션) */
 .site-header.transparent {
   background: transparent;
   border-bottom: 1px solid transparent;
@@ -149,7 +149,7 @@ body {
   color: var(--text-primary);
 }
 
-/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas (전체 화면 너비) */
+/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas (그림자 제거) */
 .flouna-full-bleed-hero {
   position: relative;
   width: 100%;
@@ -161,8 +161,8 @@ body {
   justify-content: center;
   overflow: hidden;
   margin-bottom: 3.5rem;
-  padding-top: 5rem; /* Header 투명 처리 시 상단 여백 확보 */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  padding-top: 5rem;
+  box-shadow: none !important; /* 상단 패널 그림자 제거 */
 }
 
 .flouna-hero-inner {
@@ -259,13 +259,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 6px 25px rgba(99, 102, 241, 0.45);
+  transition: transform 0.25s ease;
+  box-shadow: none;
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 35px rgba(99, 102, 241, 0.65);
 }
 
 .btn-secondary {
@@ -317,14 +316,13 @@ body {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-card);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
 }
 
 .bento-card-featured:hover {
   transform: translateY(-4px);
   border-color: var(--accent-indigo);
-  box-shadow: var(--shadow-glow);
 }
 
 .bento-img-container {
@@ -398,8 +396,8 @@ body {
   border-radius: 1.25rem;
   padding: 1.5rem;
   backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-card);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: none;
+  transition: transform 0.3s ease, border-color 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -409,7 +407,6 @@ body {
 .bento-card-sub:hover {
   transform: translateY(-3px);
   border-color: var(--accent-purple);
-  box-shadow: var(--shadow-glow);
 }
 
 /* Category Filter Bar */
@@ -438,7 +435,7 @@ body {
   background: var(--accent-indigo);
   color: #FFFFFF;
   border-color: var(--accent-indigo);
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  box-shadow: none;
 }
 
 /* Dribbble Visual Posts Grid */
@@ -453,9 +450,9 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 1.35rem;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
   backdrop-filter: blur(12px);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -464,7 +461,6 @@ body {
 .visual-post-card:hover {
   transform: translateY(-6px);
   border-color: var(--accent-indigo);
-  box-shadow: var(--shadow-glow);
 }
 
 .card-img-wrapper {
