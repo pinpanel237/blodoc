@@ -69,7 +69,7 @@ body {
   z-index: 0;
 }
 
-/* 🌿 상단 헤더 (테마 및 배경 대비 적응형 폰트 색상) */
+/* 🌿 상단 헤더 (조건부 배경 적응형) */
 .site-header {
   position: absolute;
   top: 0;
@@ -81,17 +81,35 @@ body {
   box-shadow: none !important;
 }
 
-.site-header .nav-item {
-  color: var(--text-primary);
-  font-weight: 600;
-  transition: color 0.2s ease;
+/* 메인 페이지 (어두운 3D 배너 위): 또렷한 화이트 글씨 */
+.site-header.header-on-home .nav-item {
+  color: #F8FAFC !important;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.site-header .nav-item:hover {
+.site-header.header-on-home .nav-item:hover {
+  color: #C084FC !important;
+}
+
+.site-header.header-on-home .theme-btn {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* 포스팅 상세 페이지 (일반 배경 위): 테마 색상 동적 적용 */
+.site-header.header-on-post .nav-item {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.site-header.header-on-post .nav-item:hover {
   color: var(--accent-indigo);
 }
 
-.site-header .theme-btn {
+.site-header.header-on-post .theme-btn {
   color: var(--text-primary);
   border-color: var(--border-color);
   background: var(--bg-card);
@@ -127,12 +145,7 @@ body {
 .nav-item {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-secondary);
   transition: color 0.2s ease;
-}
-
-.nav-item:hover {
-  color: var(--text-primary);
 }
 
 /* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas */

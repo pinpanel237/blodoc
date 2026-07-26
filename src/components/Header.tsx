@@ -1,10 +1,16 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 import { siteConfig } from '@/site.config';
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${isHomePage ? 'header-on-home' : 'header-on-post'}`}>
       <div className="header-container">
         <Link href="/" className="logo-text">
           ✨ {siteConfig.title}
