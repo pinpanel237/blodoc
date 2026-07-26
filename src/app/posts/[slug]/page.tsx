@@ -42,28 +42,48 @@ export default async function PostPage({
     .process(obsidianParsed);
 
   const contentHtml = processedContent.toString();
+  const coverImgSrc = post.thumbnail || '/assets/hero-banner.png';
 
   return (
-    <div className="main-container post-detail-container" style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3rem', paddingTop: '5.5rem' }}>
-      <article>
-        <header style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.75rem' }}>
-          <span className="card-category astryx-badge">{post.category}</span>
-          <h1 style={{ fontSize: '2.6rem', fontWeight: 900, margin: '0.75rem 0', lineHeight: 1.25, letterSpacing: '-0.03em' }}>
+    <div className="astryx-theme-root">
+      {/* 🌿 포스트 상단 감성 비주얼 배경 헤더 배너 (Post Hero Cover Header) */}
+      <section className="post-hero-banner">
+        <img
+          src={coverImgSrc}
+          alt={post.title}
+          className="post-hero-bg-img"
+        />
+        <div className="post-hero-inner">
+          <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', marginBottom: '1rem' }}>
+            <span className="card-category astryx-badge">{post.category}</span>
+            <span style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.7)' }}>3분 읽기</span>
+          </div>
+
+          <h1 className="post-hero-title">
             {post.title}
           </h1>
-          <div style={{ display: 'flex', gap: '1.25rem', color: 'var(--text-muted)', fontSize: '0.925rem' }}>
+
+          <div className="post-hero-meta">
             <span>작성일: {post.date}</span>
+            <span style={{ opacity: 0.5 }}>|</span>
             <span>태그: {post.tags.join(', ')}</span>
           </div>
-        </header>
+        </div>
+      </section>
 
-        <div
-          className="markdown-body"
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
-      </article>
+      {/* 📖 본문 아티클 영역 */}
+      <div className="main-container post-content-container">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3.5rem' }}>
+          <article>
+            <div
+              className="markdown-body"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+          </article>
 
-      <TOC />
+          <TOC />
+        </div>
+      </div>
     </div>
   );
 }

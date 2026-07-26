@@ -80,7 +80,7 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-title {
+h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .post-hero-title, .featured-title, .card-title {
   font-family: 'CustomTitle', -apple-system, BlinkMacSystemFont, "Pretendard", "Inter", sans-serif;
 }
 
@@ -110,38 +110,25 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   box-shadow: none !important;
 }
 
-/* 메인 페이지 (어두운 3D 배너 위): 또렷한 화이트 글씨 */
-.site-header.header-on-home .nav-item {
+/* 메인 및 포스트 커버 위: 또렷한 화이트 글씨 */
+.site-header.header-on-home .nav-item,
+.site-header.header-on-post .nav-item {
   color: #F8FAFC !important;
   font-weight: 700;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.site-header.header-on-home .nav-item:hover {
+.site-header.header-on-home .nav-item:hover,
+.site-header.header-on-post .nav-item:hover {
   color: #C084FC !important;
 }
 
-.site-header.header-on-home .theme-btn {
+.site-header.header-on-home .theme-btn,
+.site-header.header-on-post .theme-btn {
   color: #FFFFFF !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(8px);
-}
-
-/* 포스팅 상세 페이지 (일반 배경 위): 테마 색상 동적 적용 */
-.site-header.header-on-post .nav-item {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.site-header.header-on-post .nav-item:hover {
-  color: var(--accent-indigo);
-}
-
-.site-header.header-on-post .theme-btn {
-  color: var(--text-primary);
-  border-color: var(--border-color);
-  background: var(--bg-card);
 }
 
 .header-container {
@@ -178,11 +165,11 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   transition: color 0.2s ease;
 }
 
-/* 🌿 Dribbble Flouna Style Full-Bleed Expansive Hero Canvas */
+/* 🌿 메인 페이지 상단 히로 영역 (min-height: 540px 통일) */
 .flouna-full-bleed-hero {
   position: relative;
   width: 100%;
-  min-height: 520px;
+  min-height: 540px;
   background: linear-gradient(135deg, #070A14 0%, #0E1424 50%, #07090F 100%);
   border-bottom: 1px solid var(--border-color);
   display: flex;
@@ -190,7 +177,7 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   justify-content: center;
   overflow: hidden;
   margin-bottom: 3.5rem;
-  padding-top: 4.5rem;
+  padding-top: 5rem;
   box-shadow: none !important;
 }
 
@@ -198,7 +185,7 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 4rem 2rem 5rem;
+  padding: 5.5rem 2rem 6.5rem;
   position: relative;
   z-index: 2;
 }
@@ -222,23 +209,6 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
     mask-image: none;
     -webkit-mask-image: none;
   }
-}
-
-.flouna-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.825rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #818CF8;
-  background: rgba(99, 102, 241, 0.18);
-  border: 1px solid rgba(129, 140, 248, 0.35);
-  padding: 0.45rem 1.25rem;
-  border-radius: 2rem;
-  margin-bottom: 1.75rem;
-  backdrop-filter: blur(12px);
 }
 
 .flouna-hero-title {
@@ -268,49 +238,99 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   font-size: 1.2rem;
   color: #94A3B8;
   line-height: 1.7;
-  margin-bottom: 2.25rem;
   max-width: 620px;
 }
 
-.flouna-cta-group {
+/* 📖 포스트 상세 보기 상단 비주얼 배경 배너 (min-height: 540px) */
+.post-hero-banner {
+  position: relative;
+  width: 100%;
+  min-height: 540px;
+  background: linear-gradient(135deg, #090E1A 0%, #111728 50%, #0A0D16 100%);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+  padding-top: 5rem;
 }
 
-.btn-primary {
-  background: var(--gradient-aurora);
-  color: #FFFFFF;
+.post-hero-banner .card-category {
+  color: #A5B4FC !important;
+  background: rgba(99, 102, 241, 0.25) !important;
+  border: 1px solid rgba(165, 180, 252, 0.4) !important;
+  font-weight: 800 !important;
+  padding: 0.35rem 0.9rem !important;
+  border-radius: 2rem !important;
+  display: inline-block !important;
+}
+
+.post-hero-bg-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  filter: blur(2px);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+}
+
+.post-hero-inner {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5.5rem 2rem 6.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.post-hero-title {
+  font-size: 3.4rem;
   font-weight: 700;
-  font-size: 1rem;
-  padding: 0.9rem 2rem;
-  border-radius: 1rem;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.25rem;
+  color: #FFFFFF;
+  max-width: 900px;
+}
+
+@media (max-width: 768px) {
+  .post-hero-title {
+    font-size: 2.2rem;
+  }
+}
+
+.post-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* 🏷️ 세련된 마크다운 태그 뱃지 스타일 (Tag Pill) */
+.tag-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  transition: transform 0.25s ease;
-  box-shadow: none;
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: var(--accent-indigo);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
 }
 
-.btn-primary:hover {
-  transform: translateY(-3px);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: #F8FAFC;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.9rem 2rem;
-  border-radius: 1rem;
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  transition: background 0.25s ease;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
+.tag-pill:hover {
+  background: rgba(99, 102, 241, 0.22);
+  border-color: rgba(129, 140, 248, 0.5);
+  color: #A5B4FC;
+  transform: translateY(-1px);
 }
 
 /* Container */
@@ -322,8 +342,8 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   z-index: 1;
 }
 
-.post-detail-container {
-  padding-top: 5.5rem !important;
+.post-content-container {
+  padding-top: 1rem !important;
 }
 
 /* Dribbble Bento Grid Section */
@@ -538,58 +558,56 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-t
   color: #FFF;
 }
 
-/* 🏛️ Astryx Style Clean Footer Shell */
-.astryx-footer {
+/* 🏛️ 슬림 가로 인라인 푸터 (Single-line Horizontal Inline Footer) */
+.slim-footer {
   border-top: 1px solid var(--border-color);
   background: var(--bg-secondary);
-  padding: 4rem 1.5rem 2rem;
-  margin-top: 5rem;
+  padding: 1.75rem 2rem;
+  margin-top: 4rem;
 }
 
-.footer-grid {
+.slim-footer-inner {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-}
-
-@media (max-width: 768px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-.footer-links-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.footer-links-group a:hover {
-  color: var(--accent-indigo);
-}
-
-.footer-title {
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin-bottom: 0.5rem;
-}
-
-.footer-bottom {
-  max-width: 1280px;
-  margin: 0 auto;
-  border-top: 1px solid var(--border-color);
-  padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;
-  font-size: 0.825rem;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.slim-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+.footer-credit {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-left: 1px solid var(--border-color);
+  padding-left: 1rem;
+}
+
+.slim-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.slim-footer-links a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.slim-footer-links a:hover {
+  color: var(--accent-indigo);
 }

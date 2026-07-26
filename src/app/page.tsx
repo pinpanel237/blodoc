@@ -1,17 +1,18 @@
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getHomePost } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
 
 export const dynamic = 'force-static';
 
 export default function HomePage() {
   const posts = getAllPosts();
+  const homeData = getHomePost();
   const featuredPost = posts[0];
   const subPosts = posts.slice(1, 3);
 
   return (
     <div className="astryx-theme-root">
-      {/* 1. 상단 히로 배너 섹션 (일반적인 텍스트) */}
+      {/* 1. 상단 히로 배너 섹션 */}
       <section className="flouna-full-bleed-hero astryx-banner">
         <img
           src="/assets/hero-banner.png"
@@ -19,29 +20,12 @@ export default function HomePage() {
           className="flouna-hero-bg-img"
         />
         <div className="flouna-hero-inner">
-          <div className="flouna-badge astryx-badge-pill">
-            개인 기술 블로그 & 기록 공간
-          </div>
           <h1 className="flouna-hero-title">
-            생각과 기록을 정리하는 <br />
-            <span className="flouna-title-gradient">개인 블로그입니다</span>
+            {homeData.title}
           </h1>
           <p className="flouna-hero-desc">
-            옵시디언에서 작성한 마크다운 노트를 기반으로 정적 페이지를 자동 생성하여 작성된 블로그 공간입니다.
+            {homeData.description}
           </p>
-          <div className="flouna-cta-group">
-            <Link href="#posts" className="btn-primary astryx-btn-primary">
-              포스트 목록 보기
-            </Link>
-            <a
-              href="https://github.com/pinpanel237/blodoc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary astryx-btn-secondary"
-            >
-              GitHub 저장소
-            </a>
-          </div>
         </div>
       </section>
 
@@ -76,7 +60,7 @@ export default function HomePage() {
                     <h3 className="featured-title">{featuredPost.title}</h3>
                     <p className="featured-summary">{featuredPost.summary}</p>
                   </div>
-                  <div className="card-footer">
+                  <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                       <div className="author-avatar">OP</div>
                       <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{featuredPost.date}</span>
@@ -101,9 +85,9 @@ export default function HomePage() {
                         {post.summary}
                       </p>
                     </div>
-                    <div className="card-footer" style={{ borderTop: 'none', paddingTop: 0, marginTop: '0.8rem' }}>
+                    <div className="card-footer" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
                       <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{post.date}</span>
-                      <span className="tag-pill astryx-token-tag">#{post.tags[0] || 'Note'}</span>
+                      <span className="tag-pill astryx-token-tag" style={{ fontSize: '0.75rem' }}>#{post.tags[0] || 'Note'}</span>
                     </div>
                   </Link>
                 ))}

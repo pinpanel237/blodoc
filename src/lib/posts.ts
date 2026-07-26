@@ -18,22 +18,65 @@ export interface PostDetail extends PostMetaData {
   content: string;
 }
 
-const postsDirectory = path.join(process.cwd(), 'content', 'posts');
+export interface HomePostData {
+  title: string;
+  badge: string;
+  description: string;
+  github?: string;
+  content?: string;
+}
 
-/**
- * 디렉토리 및 개발용 샘플 마크다운 자동 초기화 (404 방지)
- */
-function ensurePostsExist() {
+const postsDirectory = path.join(process.cwd(), 'content', 'posts');
+const layoutDirectory = path.join(process.cwd(), 'content', 'layout');
+
+function ensureDirectoriesExist() {
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true });
+  }
+  if (!fs.existsSync(layoutDirectory)) {
+    fs.mkdirSync(layoutDirectory, { recursive: true });
   }
 }
 
 /**
- * 모든 마크다운 포스트 목록 반환 (Draft 제외, 날짜 내림차순 정렬)
+ * 기본 레이아웃 메인 설정 문서(content/layout/home.md) 데이터 추출
+ */
+export function getHomePost(): HomePostData {
+  ensureDirectoriesExist();
+  const homePath = path.join(layoutDirectory, 'home.md');
+
+  const defaultHome: HomePostData = {
+    badge: '개인 기술 블로그 & 기록 공간',
+    title: '생각과 기록을 정리하는 개인 블로그입니다',
+    description: '옵시디언에서 작성한 마크다운 노트를 기반으로 생성된 정적 블로그 공간입니다.',
+  };
+
+  if (!fs.existsSync(homePath)) {
+    return defaultHome;
+  }
+
+  try {
+    const fileContents = fs.readFileSync(homePath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    return {
+      badge: data.badge || defaultHome.badge,
+      title: data.title || defaultHome.title,
+      description: data.summary || data.description || content.trim() || defaultHome.description,
+      github: data.github || undefined,
+      content: content.trim(),
+    };
+  } catch (error) {
+    console.error('Error reading content/layout/home.md:', error);
+    return defaultHome;
+  }
+}
+
+/**
+ * 모든 일반 블로그 포스트 목록 반환 (content/posts/ 내 마크다운 파일)
  */
 export function getAllPosts(): PostMetaData[] {
-  ensurePostsExist();
+  ensureDirectoriesExist();
 
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData: PostMetaData[] = [];
@@ -71,10 +114,10 @@ export function getAllPosts(): PostMetaData[] {
 }
 
 /**
- * 단일 포스트 원본 데이터 가져오기 (Safe Matching)
+ * 단일 포스트 원본 데이터 가져오기 (content/posts/ 내 파일 대상)
  */
 export function getPostBySlug(slug: string): PostDetail | null {
-  ensurePostsExist();
+  ensureDirectoriesExist();
 
   if (!slug) return null;
 
@@ -83,10 +126,8 @@ export function getPostBySlug(slug: string): PostDetail | null {
     let targetFileName = `${decodedSlug}.md`;
     let fullPath = path.join(postsDirectory, targetFileName);
 
-    // 1. 정확한 파일 존재 여부 확인
     if (!fs.existsSync(fullPath)) {
       const files = fs.readdirSync(postsDirectory);
-      // 2. 대소문자 구별 없이 매칭되는 파일 검색
       const matched = files.find(
         (f) => f.endsWith('.md') && f.replace(/\.md$/, '').toLowerCase() === decodedSlug.toLowerCase()
       );

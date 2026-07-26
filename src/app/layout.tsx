@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import '@/styles/markdown.css';
 import Header from '@/components/Header';
 import { siteConfig } from '@/site.config';
+import { getHomePost } from '@/lib/posts';
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -21,6 +22,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const homeData = getHomePost();
+  const githubUrl = homeData.github || siteConfig.social.github;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -46,50 +50,40 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
 
-        {/* 🏛️ Astryx Style Clean Editorial Footer with License Attribution */}
-        <footer className="astryx-footer">
-          <div className="footer-grid">
-            <div>
-              <div className="logo-text" style={{ fontSize: '1.2rem', marginBottom: '0.6rem' }}>
-                ✨ {siteConfig.title}
-              </div>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', maxWidth: '300px' }}>
-                {siteConfig.description}
-              </p>
-            </div>
-
-            <div className="footer-links-group">
-              <div className="footer-title">Navigation</div>
-              <Link href="/">Home</Link>
-              <Link href="#posts">All Posts</Link>
-              <a href="https://github.com/pinpanel237/blodoc" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </div>
-
-            <div className="footer-links-group">
-              <div className="footer-title">Obsidian Architecture</div>
-              <span>Pure SSG Pipeline</span>
-              <span>Asset Copy Engine</span>
-              <span>Wikilink & Callouts</span>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} {siteConfig.title}. Built with Next.js & Obsidian.</span>
-            
-            {siteConfig.credits.showTemplateCredit && (
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Template by{' '}
-                <a
-                  href={siteConfig.credits.originalRepo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: 'underline', color: 'var(--accent-indigo)', fontWeight: 600 }}
-                >
-                  {siteConfig.credits.originalAuthor}
-                </a>{' '}
-                ({siteConfig.credits.license})
+        {/* 🏛️ 슬림 가로 인라인 푸터 (GitHub 링크만 동적 커스텀 가능) */}
+        <footer className="astryx-footer slim-footer">
+          <div className="slim-footer-inner">
+            <div className="slim-footer-left">
+              <span className="logo-text" style={{ fontSize: '1.1rem' }}>
+                {siteConfig.title}
               </span>
-            )}
+              <span className="footer-copyright">
+                © {new Date().getFullYear()} {siteConfig.title}. All rights reserved.
+              </span>
+              {siteConfig.credits.showTemplateCredit && (
+                <span className="footer-credit">
+                  Template by{' '}
+                  <a
+                    href={siteConfig.credits.originalRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: 'underline', color: 'var(--accent-indigo)', fontWeight: 600 }}
+                  >
+                    {siteConfig.credits.originalAuthor}
+                  </a>
+                </span>
+              )}
+            </div>
+
+            <div className="slim-footer-links">
+              <Link href="/">홈</Link>
+              <Link href="/#posts">최신 포스트</Link>
+              {githubUrl && (
+                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              )}
+            </div>
           </div>
         </footer>
       </body>
