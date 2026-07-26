@@ -3,6 +3,31 @@
 @import "@astryxdesign/theme-neutral/theme.css";
 @import "tailwindcss";
 
+/* 🔤 Custom Title Font Definition */
+@font-face {
+  font-family: 'CustomTitle';
+  src: url('/fonts/Title_Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CustomTitle';
+  src: url('/fonts/Title_Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CustomTitle';
+  src: url('/fonts/Title_Medium.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg-primary: #07090E;
   --bg-secondary: #0F141F;
@@ -50,9 +75,13 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Inter", sans-serif;
+  font-family: 'CustomTitle', -apple-system, BlinkMacSystemFont, "Pretendard", "Inter", sans-serif;
   line-height: 1.6;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .featured-title, .card-title {
+  font-family: 'CustomTitle', -apple-system, BlinkMacSystemFont, "Pretendard", "Inter", sans-serif;
 }
 
 /* Background Aurora Radial */
@@ -134,6 +163,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-family: 'CustomTitle', sans-serif;
 }
 
 .nav-links {
@@ -213,12 +243,13 @@ body {
 
 .flouna-hero-title {
   font-size: 4.2rem;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.045em;
   margin-bottom: 1.5rem;
   color: #FFFFFF;
   max-width: 750px;
+  font-family: 'CustomTitle', sans-serif;
 }
 
 @media (max-width: 768px) {
@@ -372,11 +403,12 @@ body {
 
 .featured-title {
   font-size: 1.85rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.25;
   margin-bottom: 0.8rem;
   color: var(--text-primary);
   letter-spacing: -0.03em;
+  font-family: 'CustomTitle', sans-serif;
 }
 
 .featured-summary {
