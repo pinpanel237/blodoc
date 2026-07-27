@@ -253,18 +253,53 @@
 
 ---
 
-### 📊 통계 & 접속 분석 (Analytics & Metrics)
+### 💡 통계, 좋아요 & 댓글 기능 (선택적 구현 아이디어 세부 명세)
 
-- [ ] **수집 기능 On/Off 토글 스위치 설정 (`site.config.ts` / 환경 변수)**  
-  방문자 수 수집, 좋아요 및 댓글 기록 파이프라인 전체를 사용자가 원할 때 언제든지 쉽게 키거나 끌 수 있는(On/Off) 전역 설정 옵션 지원
+> [!NOTE]
+> **선택적 확장 아이디어 (Optional Feature Reference)**  
+> 순수 정적 블로그(Pure SSG)의 빠른 속도와 무서버(Serverless/DBless) 운영 장점을 유지하기 위해 현재는 비활성화되어 있습니다.  
+> 추후 필요에 따라 아래의 **구현 아이디어 방안** 중 하나를 선택하여 손쉽게 추가 구현할 수 있도록 설계 옵션을 명시해 둡니다.
+
+#### 💬 1. 댓글 시스템 (Comments) 구현 아이디어
+- **방안 A: Giscus / Utterances (권장 - GitHub Discussions/Issues 연동)**
+  - **구조**: 별도 DB 구축 없이 GitHub Discussions API를 연동하여 댓글 및 리액션(Reactions) 처리.
+  - **장점**: 완전 무료, 이메일/GitHub 계정 로그인 지원, 다크모드/라이트모드 자동 반응형 지원.
+  - **구현 방법**: `@giscus/react` 패키지 설치 후 `src/components/Comments.tsx` 생성 및 포스트 하단 배치.
+- **방안 B: 서버리스 KV + 1일 1회 마크다운 커밋 (Obsidian 소장형)**
+  - **구조**: 웹사이트 작성 댓글 → Vercel KV / Upstash Redis에 실시간 수집 → 매일 밤 12시 GitHub Actions가 `content/comments/[slug].md` 파일로 커밋 푸시.
+  - **장점**: 모든 댓글이 내 옵시디언 노트로 영구 소장되며 위키링크(`[[slug]]`) 자동 연결.
+- **방안 C: Supabase / Firebase (실시간 소셜 댓글)**
+  - **구조**: Supabase PostgreSQL DB 연동하여 실시간 댓글, 답글(대댓글), 닉네임/프로필 표시.
+
+#### ❤️ 2. 좋아요 및 포스트 반응 (Likes & Reactions) 구현 아이디어
+- **방안 A: LocalStorage 기반 간이 좋아요/북마크 (클라이언트 전용)**
+  - **구조**: 서버 없이 방문자의 브라우저 `localStorage`에 하트 누른 포스트 ID 수집 및 '내가 좋아한 포스트' 모아보기 페이지 제공.
+- **방안 B: Cloudflare Workers / Vercel KV 기반 좋아요 카운터 API**
+  - **구조**: 포스트 하단에 하트 버튼 클릭 시 `/api/like?slug=...` 호출 → KV DB 누적 카운트 업 → 포스트 상단에 총 좋아요 수 표시.
+  - **중복 방지**: 브라우저 핑거프린트 또는 IP 기반 중복 클릭 가드 적용.
+
+#### 📊 3. 방문자 통계 & 접속 분석 (Analytics & PV) 구현 아이디어
+- **방안 A: 개인정보 보호 중심 경량 분석 도구 (Umami / Plausible / Cloudflare Analytics)**
+  - **구조**: 쿠키 수집 없는 1KB 미만 스크립트 추가하여 방문자 수, 인기 글, 유입 경로 파악.
+- **방안 B: Next.js API Routes + 조회수(PV) 뱃지**
+  - **구조**: 각 포스트 페이지 진입 시 조회수(Page View) 증가 처리 → 인기 게시글 TOP 5를 메인 화면 Bento Grid 카드로 자동 노출.
+- **방안 C: Obsidian 일일 통계 마크다운 노트 (`content/analytics/stats.md`)**
+  - **구조**: 누적 방문자 수, 일별 조회수를 집계하여 마크다운 표 및 차트로 자동 기록해주는 파이프라인.
+
+#### 🔗 4. 마크다운 내 위키링크(`[[Wikilink]]`) & 댓글/포스트 상호 링크 연결 아이디어
+- **옵시디언 위키링크(`[[slug]]` / `[[slug|표기명]]`) 자동 웹 라우팅 파싱**:
+  - 마크다운 본문에서 작성된 `[[other-post]]` 위키링크를 파서([`src/lib/obsidian.ts`](file:///Users/mypc/projects/blodoc/src/lib/obsidian.ts))가 자동으로 감지하여 HTML 내부 링크 `<a href="/posts/other-post">`로 동적 파싱 렌더링.
+- **댓글 노트 ↔ 원본 포스트 마크다운 상호 링크 연동**:
+  - `content/comments/[slug].md` 마크다운 파일 상단 Frontmatter에 `target_post: "[[slug]]"` 및 본문 내 `[원문 포스트로 이동](/posts/[slug])` 링크를 작성하여 옵시디언 로컬 앱 및 웹사이트 양쪽에서 양방향 백링크(Backlink) 구조 완성.
+- **포스트 하단 역방향 백링크(Backlinks) 자동 표시**:
+  - 해당 마크다운 노트를 참조하는 다른 포스트나 댓글 노트 목록을 자동 추출하여 포스트 하단에 "🔗 이 글을 참조하는 노트 (Backlinks)" 목록으로 렌더링.
+
+---
+
+- [ ] **수집 기능 On/Off 전역 토글 스위치 (`src/site.config.ts`) 연동 구현**  
 - [ ] **독립 댓글/통계 마크다운 문서 분리 & Obsidian 위키링크(`[[slug]]`) 자동 연결 구조**  
-  Git 충돌을 100% 예방하고 원본 글을 보호하기 위해 게시글 원본(`content/posts/`)을 직접 변경하지 않고, 독립된 `content/comments/[slug].md` 및 `content/analytics/stats.md` 마크다운 파일로 기록을 분리 관리하며 `target_post: "[[slug]]"` 위키링크를 자동 연동하는 아키텍처
-- [ ] **마크다운 문서 기반 접속자 통계 및 댓글 자동 기록 파이프라인**  
-  웹사이트 방문자 수, 일별/월별 접속 통계, 포스트별 조회수(PV), 좋아요 및 댓글 목록을 독립 마크다운 문서에 일괄 기록하는 파이프라인
-- [ ] **하루 1회 배치 커밋 파이프라인 (GitHub Actions Cron)**  
-  낮 동안 발생한 방문자/좋아요/댓글 이력을 서버리스 KV(Upstash/Vercel KV 등)에 실시간 임시 수집한 후, 매일 밤 12시 GitHub Action이 실행되어 단 1회의 깔끔한 일일 통합 커밋(`chore(analytics): YYYY-MM-DD 일일 통계 및 댓글 마크다운 동기화`)으로 GitHub에 푸시하는 기능 (Git 히스토리 오염 방지)
-- [ ] **옵시디언 마크다운 동기화 & 통계 요약 뱃지 표시**  
-  마크다운에 기록된 통계, 좋아요 수, 댓글 수를 바탕으로 포스트 상단 및 메인 페이지에 총 방문자 수, 인기 게시글 순위 및 통계 요약 뱃지 표시
+- [ ] **마크다운 본문 내 위키링크(`[[slug]]`) 자동 파싱 및 백링크(Backlink) 연동 UI**  
+- [ ] **하루 1회 배치 커밋 파이프라인 (GitHub Actions Cron)**
 
 
 

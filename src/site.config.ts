@@ -22,8 +22,6 @@ export const siteConfig = {
   // 통계 및 수집 기능 활성화/비활성화 스위치 (On/Off)
   analytics: {
     enabled: false, // true로 설정 시 방문자 수 및 통계 수집 활성화
-    enableLikes: false, // 좋아요 기록 기능 활성화 여부
-    enableComments: false, // 댓글 기록 기능 활성화 여부
   },
 };
 
