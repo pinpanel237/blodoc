@@ -89,7 +89,9 @@ blodoc/
 │   └── blog-architecture-analysis.md
 ├── content/                  <-- Obsidian 연동 마크다운 및 이미지 저장소
 │   ├── assets/               <-- Obsidian 첨부 이미지
-│   └── posts/                <-- 마크다운 포스트 파일들
+│   ├── posts/                <-- 마크다운 포스트 파일들 (원형 유지를 위한 사용자 전용)
+│   ├── comments/             <-- 수집 댓글 마크다운 노트 (target: "[[slug]]" 위키링크 연동)
+│   └── analytics/            <-- 일일 방문자/좋아요 통합 요약 마크다운 노트
 ├── scripts/
 │   └── copy-assets.mjs       <-- 빌드 타임 이미지 자동 복사 스크립트
 ├── public/

@@ -102,3 +102,11 @@ NEXT_PUBLIC_SITE_URL=https://your-custom-domain.com
 Vercel 대시보드의 `Settings -> Environment Variables`에 아래 환경 변수를 등록하면 `sitemap.xml` 및 `robots.txt`에 해당 도메인이 자동 반영됩니다:
 - **Key**: `NEXT_PUBLIC_SITE_URL`
 - **Value**: `https://your-blog-domain.vercel.app` (또는 커스텀 도메인)
+
+---
+
+## 📋 로드맵 & 기능 추적 문서
+
+프로젝트의 구현 완료 내역 및 향후 개발 예정 기능(검색, 1일 1회 마크다운 기반 통계 및 댓글 동기화 파이프라인 등)은 아래 로드맵 문서에서 상세히 확인하실 수 있습니다:
+- 🗺️ **[기능 로드맵 문서 (docs/feature-roadmap.md)](docs/feature-roadmap.md)**
+

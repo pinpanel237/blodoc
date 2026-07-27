@@ -98,7 +98,15 @@ Create `.env.local` in the project root:
 NEXT_PUBLIC_SITE_URL=https://your-custom-domain.com
 ```
 
-### 2. Vercel Deployment Setup
-In Vercel Dashboard (`Settings -> Environment Variables`), add the following key:
+### 2. Vercel Deployment Environment Setup
+In your Vercel Dashboard (`Settings -> Environment Variables`), add the following key:
 - **Key**: `NEXT_PUBLIC_SITE_URL`
 - **Value**: `https://your-blog-domain.vercel.app` (or custom domain)
+
+---
+
+## 📋 Roadmap & Feature Tracking
+
+Check completed milestones and upcoming feature roadmaps (Full-text search, 1-day batch markdown-based analytics & comments pipeline) in the roadmap documentation:
+- 🗺️ **[Feature Roadmap (docs/feature-roadmap.md)](docs/feature-roadmap.md)**
+
