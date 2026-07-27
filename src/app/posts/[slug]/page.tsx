@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { parseObsidianMarkdown } from '@/lib/obsidian';
@@ -60,7 +61,13 @@ export default async function PostPage({
         />
         <div className="post-hero-inner">
           <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', marginBottom: '1rem' }}>
-            <span className="card-category astryx-badge">{post.category}</span>
+            <Link
+              href={`/?category=${encodeURIComponent(post.category)}`}
+              className="card-category astryx-badge"
+              style={{ textDecoration: 'none' }}
+            >
+              {post.category}
+            </Link>
             <span style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.7)' }}>3분 읽기</span>
           </div>
 

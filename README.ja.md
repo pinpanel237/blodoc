@@ -1,4 +1,4 @@
-# 🌿 blodoc - Obsidian & Next.js Pure SSG Blog
+# blodoc - Obsidian & Markdown Blog
 
 <p align="center">
   <a href="README.md"><b>English</b></a> |
@@ -11,7 +11,7 @@
 
 ObsidianのマークダウンノートをGitHubにプッシュするだけで、Next.js Pure SSGパイプラインを通じて静的HTMLに自動パースし、Vercel等で安定してホスティングできるブログテンプレートです。
 
-## ✨ 主な機能
+## 主な機能
 
 - **Obsidianパイプライン**: Wikilink (`[[Link]]`)、Obsidian Callout (`> [!note]`)、添付画像パスの自動変換。
 - **Pure SSG (Static Site Generation)**: Vercelサーバーレスランタイム環境での`fs`アクセスエラーが発生しない100%静的生成。
@@ -20,7 +20,7 @@ ObsidianのマークダウンノートをGitHubにプッシュするだけで、
 
 ---
 
-## 🚀 クイックスタートガイド
+## クイックスタートガイド
 
 ### 1. リポジトリのクローンとパッケージインストール
 ```bash
@@ -42,7 +42,7 @@ npm run build
 
 ---
 
-## 📂 コンテンツ管理構造
+## コンテンツ管理構造
 
 - **ブログ記事**: `content/posts/*.md` 内にマークダウンノートを配置します。
 - **メインバナー & レイアウト設定**: `content/layout/home.md` ファイルでメインバナーのタイトル、説明文、GitHubリンクを変更できます。

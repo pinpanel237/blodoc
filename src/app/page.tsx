@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getAllPosts, getHomePost } from '@/lib/posts';
-import PostCard from '@/components/PostCard';
 import HeroTypewriter from '@/components/HeroTypewriter';
+import FilteredPostGrid from '@/components/FilteredPostGrid';
 
 export const dynamic = 'force-static';
 
@@ -104,36 +104,10 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 3. 전체 포스트 섹션 */}
-        <section id="all-articles">
-          <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-              <h2 style={{ fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
-                전체 포스트
-              </h2>
-              <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                총 {posts.length}개의 포스트
-              </span>
-            </div>
-          </div>
-
-          {/* 카테고리 필터 바 */}
-          <div className="category-filter-bar" style={{ marginBottom: '2.5rem' }}>
-            <button className="chip-btn astryx-chip active">전체</button>
-            <button className="chip-btn astryx-chip">옵시디언</button>
-            <button className="chip-btn astryx-chip">웹 개발</button>
-            <button className="chip-btn astryx-chip">디자인</button>
-            <button className="chip-btn astryx-chip">일반</button>
-          </div>
-
-          {/* 포스트 카드 그리드 */}
-          <div className="dribbble-posts-grid">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </section>
+        {/* 3. 전체 포스트 섹션 (동적 카테고리 필터링 적용) */}
+        <FilteredPostGrid posts={posts} />
       </div>
     </div>
   );
 }
+

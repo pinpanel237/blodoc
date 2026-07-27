@@ -1,8 +1,18 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { PostMetaData } from '@/lib/posts';
 
 export default function PostCard({ post }: { post: PostMetaData }) {
+  const router = useRouter();
   const thumbnailSrc = post.thumbnail || '/assets/blog-demo.png';
+
+  const handleCategoryClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/?category=${encodeURIComponent(post.category)}`);
+  };
 
   return (
     <Link href={`/posts/${post.slug}`} className="visual-post-card astryx-card">
@@ -13,7 +23,14 @@ export default function PostCard({ post }: { post: PostMetaData }) {
       <div className="card-body">
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
-            <span className="card-category astryx-badge">{post.category}</span>
+            <span
+              className="card-category astryx-badge"
+              onClick={handleCategoryClick}
+              style={{ cursor: 'pointer' }}
+              title={`${post.category} 카테고리로 필터링`}
+            >
+              {post.category}
+            </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>3분 읽기</span>
           </div>
 
@@ -45,3 +62,4 @@ export default function PostCard({ post }: { post: PostMetaData }) {
     </Link>
   );
 }
+

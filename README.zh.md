@@ -1,4 +1,4 @@
-# 🌿 blodoc - Obsidian & Next.js Pure SSG Blog
+# blodoc - Obsidian & Markdown Blog
 
 <p align="center">
   <a href="README.md"><b>English</b></a> |
@@ -11,7 +11,7 @@
 
 这是一个基于 Next.js App Router 的 Pure SSG 静态博客模板。只需将 Obsidian Markdown 笔记推送至 GitHub，即可通过静态编译自动生成 HTML，在 Vercel 等平台无缝托管。
 
-## ✨ 核心特性
+## 核心特性
 
 - **Obsidian 语法支持**: 原生支持 Wikilink (`[[Link]]`)、Obsidian Callout (`> [!note]`) 以及附件图片自动解析。
 - **Pure SSG (静态站点生成)**: 100% 预渲染静态页面，彻底避免 Vercel 无服务器环境下的 `fs` 运行时文件读取错误。
@@ -20,7 +20,7 @@
 
 ---
 
-## 🚀 快速开始
+## 快速开始
 
 ### 1. 克隆仓库与安装依赖
 ```bash
@@ -42,7 +42,7 @@ npm run build
 
 ---
 
-## 📂 内容管理结构
+## 内容管理结构
 
 - **博客文章**: 将 Markdown 笔记放置在 `content/posts/*.md` 目录下。
 - **首页与布局配置**: 可在 `content/layout/home.md` 中修改首页横幅标题、说明文字及 GitHub 链接。
