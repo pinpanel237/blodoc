@@ -26,6 +26,12 @@ export interface HomePostData {
   content?: string;
 }
 
+export interface LayoutPageData {
+  title: string;
+  summary?: string;
+  content: string;
+}
+
 const postsDirectory = path.join(process.cwd(), 'content', 'posts');
 const layoutDirectory = path.join(process.cwd(), 'content', 'layout');
 
@@ -69,6 +75,32 @@ export function getHomePost(): HomePostData {
   } catch (error) {
     console.error('Error reading content/layout/home.md:', error);
     return defaultHome;
+  }
+}
+
+/**
+ * content/layout/ 하위 마크다운 파일(예: credits.md) 데이터 추출
+ */
+export function getLayoutPage(filename: string): LayoutPageData | null {
+  ensureDirectoriesExist();
+  const filePath = path.join(layoutDirectory, filename.endsWith('.md') ? filename : `${filename}.md`);
+
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+
+  try {
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    return {
+      title: data.title || path.basename(filename, '.md'),
+      summary: data.summary || data.description || undefined,
+      content: content.trim(),
+    };
+  } catch (error) {
+    console.error(`Error reading layout file ${filename}:`, error);
+    return null;
   }
 }
 

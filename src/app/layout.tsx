@@ -78,6 +78,7 @@ export default function RootLayout({
             <div className="slim-footer-links">
               <Link href="/">홈</Link>
               <Link href="/#posts">최신 포스트</Link>
+              <Link href="/credits">저작권 안내</Link>
               {githubUrl && (
                 <a href={githubUrl} target="_blank" rel="noopener noreferrer">
                   GitHub
