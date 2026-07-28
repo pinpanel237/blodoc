@@ -7,15 +7,29 @@ export function parseObsidianMarkdown(markdown: string): string {
 
   let parsed = markdown;
 
-  // 1. Obsidian Embed Image: ![[image.png]] -> ![](assets/image.png)
-  parsed = parsed.replace(/!\[\[(.*?)\]\]/g, (match, imageName) => {
-    const cleanName = imageName.trim();
-    return `![${cleanName}](/assets/${cleanName})`;
+  // 1. Obsidian Embed Image: ![[subfolder/image.png]] 또는 ![[image.png]]
+  parsed = parsed.replace(/!\[\[(.*?)\]\]/g, (match, imagePath) => {
+    const cleanPath = imagePath.trim().replace(/^assets\//, '');
+    const fileName = cleanPath.split('/').pop() || cleanPath;
+    return `![${fileName}](/assets/${cleanPath})`;
   });
 
-  // 2. Standard Obsidian Image relative path: ![](assets/image.png) -> ![](/assets/image.png)
-  parsed = parsed.replace(/!\[(.*?)\]\(assets\/(.*?)\)/g, (match, alt, filename) => {
-    return `![${alt}](/assets/${filename})`;
+  // 2. Standard Markdown Relative Image Paths: ![](assets/subfolder/image.png), !(./image.png), ![](image.png)
+  parsed = parsed.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, imageSrc) => {
+    const trimmedSrc = imageSrc.trim();
+    
+    // 외부 HTTP/HTTPS 이미지 링크는 그대로 유지
+    if (trimmedSrc.startsWith('http://') || trimmedSrc.startsWith('https://')) {
+      return match;
+    }
+
+    // assets/ 또는 ./ 접두사 제거 후 /assets/ 호스팅 경로로 변환
+    let cleanSrc = trimmedSrc.replace(/^\.\//, '').replace(/^assets\//, '');
+    if (!cleanSrc.startsWith('/')) {
+      cleanSrc = `/assets/${cleanSrc}`;
+    }
+
+    return `![${alt}](${cleanSrc})`;
   });
 
   // 3. Obsidian Wikilinks: [[link-slug]] or [[link-slug|Custom Label]]

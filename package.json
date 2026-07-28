@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/copy-assets.mjs && next dev",
-    "prebuild": "node scripts/copy-assets.mjs",
-    "build": "node scripts/copy-assets.mjs && next build",
+    "prebuild": "node scripts/fetch-content.mjs && node scripts/copy-assets.mjs",
+    "build": "node scripts/fetch-content.mjs && node scripts/copy-assets.mjs && next build",
     "start": "next start",
     "lint": "eslint"
   },

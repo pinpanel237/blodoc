@@ -16,19 +16,20 @@
 
 ```mermaid
 flowchart TD
-    subgraph 1. Obsidian App
+    subgraph 1. Obsidian App / Real Content Repo
         A[마크다운 노트 작성] -->|이미지 첨부| B[assets/photo.png]
+        A & B -->|Git Push| Repo[운영용 Git 콘텐츠 저장소]
     end
 
-    subgraph 2. GitHub Repository
-        A -->|Obsidian Git Plugin| C[content/posts/*.md]
-        B -->|Obsidian Git Plugin| D[content/assets/*.png]
+    subgraph 2. Local Dev Environment
+        LocalContent[content/ (로컬 테스트 마크다운)] --> Dev[Next.js Dev Server]
     end
 
     subgraph 3. Vercel Build Step
-        C & D --> E[Next.js Build Trigger]
-        E --> F[Script: content/assets -> public/assets 자동 복사]
-        F --> G[Remark/Rehype Parser: Wikilink, Callout, Image 경로 변환]
+        Repo -->|CONTENT_GIT_REPO 변수 참조| E[Next.js Build Trigger]
+        E --> F1[Script: fetch-content.mjs 원격 Clone]
+        F1 --> F2[Script: content/assets -> public/assets 자동 복사]
+        F2 --> G[Remark/Rehype Parser: Wikilink, Callout, Image 경로 변환]
         G --> H[Pure SSG: generateStaticParams HTML 사전 생성]
     end
 
@@ -54,16 +55,15 @@ Next.js 앱을 Vercel에 배포할 때 자주 발생하는 빌드 실패 및 런
 
 ## 🖼️ 3. GitHub 기반 이미지 저장 및 처리 구조
 
-별도의 Cloud storage (S3, Cloudinary 등) 없이 **GitHub 저장소 하나로 이미지까지 자동 처리**합니다.
+별도의 Cloud storage (S3, Cloudinary 등) 없이 **GitHub 저장소 하나로 이미지까지 자동 처리**하며, 게시글별 독립 서브폴더 관리도 지원합니다.
 
-1. **Obsidian 설정**:
-   - `Settings` $\rightarrow$ `Files and links` $\rightarrow$ `Default location for new attachments`를 `In subfolder under current folder` (폴더명: `assets`)로 지정.
-2. **저장소 파일 구조**:
-   - `content/posts/my-first-post.md`
-   - `content/assets/my-image.png`
-3. **Next.js 파이프라인**:
-   - 빌드 시작 시 `scripts/copy-assets.mjs`가 실행되어 `content/assets`의 파일들을 `public/assets` 폴더로 자동 복사.
-   - 마크다운 파서가 `![[my-image.png]]` 및 `![](assets/my-image.png)`를 HTML `<img src="/assets/my-image.png" />`로 변환.
+1. **Obsidian 설정 & 이미지 관리 패턴**:
+   * **단일 에셋 폴더 방식**: `content/assets/my-image.png`
+   * **게시글별 서브폴더 방식 (권장)**: `content/assets/my-post-name/my-image.png`
+   * **게시글 번들(Page Bundle) 방식**: `content/posts/my-post-name/my-image.png`
+2. **Next.js 파이프라인 (재귀 탐색 및 자동 변환)**:
+   * 빌드 시작 시 `scripts/copy-assets.mjs`가 `content/` 내 모든 하위 폴더의 이미지를 재귀적(Recursive)으로 탐색하여 `public/assets/` 이하 동일 구조로 자동 복사합니다.
+   * 커스텀 마크다운 파서(`src/lib/obsidian.ts`)가 `![[my-post-name/photo.png]]`, `![](assets/my-post-name/photo.png)`, `![](./photo.png)` 구문을 HTML `<img src="/assets/my-post-name/photo.png" />` 주소로 자동 호스팅 정규화합니다.
 
 ---
 
@@ -93,6 +93,7 @@ blodoc/
 │   ├── comments/             <-- 수집 댓글 마크다운 노트 (target: "[[slug]]" 위키링크 연동)
 │   └── analytics/            <-- 일일 방문자/좋아요 통합 요약 마크다운 노트
 ├── scripts/
+│   ├── fetch-content.mjs     <-- 빌드 타임 원격 Git 콘텐츠 동기화 스크립트 (환경변수 참조)
 │   └── copy-assets.mjs       <-- 빌드 타임 이미지 자동 복사 스크립트
 ├── public/
 │   └── assets/               <-- 복사 완료된 호스팅용 이미지
@@ -115,6 +116,22 @@ blodoc/
 ├── package.json
 └── tsconfig.json
 ```
+
+---
+
+## 🔗 7. 원격 Git 저장소 분리 및 환경변수 연동 가이드
+
+블로그 웹앱 저장소와 별개로 옵시디언 마크다운 전용 Git 저장소를 사용하는 구조입니다.
+
+### 1) 환경 변수 설정 (`CONTENT_GIT_REPO`)
+* **로컬 환경**: `.env.local`을 비워 두거나 작성하지 않으면 기존 `/content` 폴더의 로컬 테스트 마크다운을 사용합니다.
+* **프로덕션 (Vercel 등)**:
+  * Public 저장소: `CONTENT_GIT_REPO=https://github.com/username/obsidian-content.git`
+  * Private 저장소 (PAT 사용): `CONTENT_GIT_REPO=https://<GITHUB_PAT>@github.com/username/obsidian-content.git`
+
+### 2) 동기화 동작 원리 (`scripts/fetch-content.mjs`)
+* `npm run build` 또는 `npm run prebuild` 실행 시 `CONTENT_GIT_REPO` 환경변수 유무를 체크합니다.
+* 환경변수가 등록되어 있으면 기존 `/content` 폴더를 초기화한 후 원격 Git 저장소를 `git clone --depth 1`로 다운로드 받아 빌드에 사용합니다.
 
 ---
 

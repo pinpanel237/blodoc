@@ -44,9 +44,12 @@ npm run build
 
 ## 마크다운 작성 및 관리 구조
 
-- **일반 블로그 포스트**: `content/posts/*.md`에 마크다운 문서를 작성합니다.
+- **일반 블로그 포스트**: `content/posts/*.md`에 마크다운 문서를 작성합니다. (하위 서브 폴더 분류도 자동 지원)
 - **메인 배너 & 레이아웃 설정**: `content/layout/home.md` 문서에서 메인 배너 대제목, 설명글, GitHub 링크를 변경할 수 있습니다.
-- **첨부 이미지**: `content/assets/` 폴더에 이미지를 넣으면 빌드 시 `public/assets/`로 자동 복사됩니다.
+- **첨부 이미지 관리**:
+  - **단일 에셋 폴더 방식**: `content/assets/photo.png`
+  - **게시글별 서브폴더 방식 (권장)**: `content/assets/게시글명/photo.png` 또는 `content/posts/게시글명/photo.png`
+  - 이미지 파일은 빌드 시 `public/assets/` 이하 동일 구조로 자동 재귀 복사되어 `![[게시글명/photo.png]]` 형태로 자연스럽게 연동됩니다.
 
 ---
 
@@ -88,20 +91,32 @@ github: https://github.com/your-username/blodoc   # GitHub 프로필/저장소 �
 
 ---
 
-## 환경 변수 설정 가이드 (`NEXT_PUBLIC_SITE_URL`)
+## 환경 변수 설정 가이드 (`NEXT_PUBLIC_SITE_URL` & `CONTENT_GIT_REPO`)
 
-개발 환경과 운영(Vercel) 환경의 사이트 도메인 주소를 설정하기 위해 환경 변수를 사용합니다. 미설정 시 개발 환경은 `http://localhost:3000`, 운영 환경은 기본 Vercel URL이 자동으로 적용됩니다.
+개발 환경과 운영(Vercel) 환경의 사이트 도메인 주소 및 원격 콘텐츠 저장소를 설정하기 위해 환경 변수를 사용합니다.
 
-### 1. 로컬 환경 변수 설정 (`.env.local`)
+### 1. 주요 환경 변수 목록
+
+| 환경 변수 | 설명 | 예시 |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_SITE_URL` | 블로그 대표 사이트 도메인 (sitemap.xml 및 SEO에 활용) | `https://your-blog-domain.vercel.app` |
+| `CONTENT_GIT_REPO` | **(선택)** 실제 운영에 사용할 별도 원격 Obsidian Git 저장소 URL | `https://github.com/username/obsidian-content.git` |
+
+> [!TIP]
+> **원격 콘텐츠 Git 저장소 연동 (`CONTENT_GIT_REPO`)**:
+> `CONTENT_GIT_REPO`가 설정되어 있으면, 빌드 시점(`prebuild`)에 해당 원격 Git 저장소를 `content/` 폴더로 자동 Clone받아 정적 사이트를 빌드합니다. 환경 변수가 비어 있으면 기존 로컬 `/content` 폴더를 사용하여 테스트합니다.
+
+### 2. 로컬 환경 변수 설정 (`.env.local`)
 프로젝트 루트 디렉토리에 `.env.local` 파일 생성:
 ```env
-NEXT_PUBLIC_SITE_URL=https://your-custom-domain.com
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+# CONTENT_GIT_REPO=https://github.com/username/your-obsidian-repo.git
 ```
 
-### 2. Vercel 배포 환경 변수 설정
-Vercel 대시보드의 `Settings -> Environment Variables`에 아래 환경 변수를 등록하면 `sitemap.xml` 및 `robots.txt`에 해당 도메인이 자동 반영됩니다:
-- **Key**: `NEXT_PUBLIC_SITE_URL`
-- **Value**: `https://your-blog-domain.vercel.app` (또는 커스텀 도메인)
+### 3. Vercel 배포 환경 변수 설정
+Vercel 대시보드의 `Settings -> Environment Variables`에 원하는 키/값을 등록합니다:
+- **Key**: `NEXT_PUBLIC_SITE_URL` / **Value**: `https://your-blog-domain.vercel.app`
+- **Key**: `CONTENT_GIT_REPO` / **Value**: `https://github.com/username/your-obsidian-repo.git` (Private 저장소의 경우 GitHub PAT 조합: `https://<PAT>@github.com/username/repo.git`)
 
 ---
 

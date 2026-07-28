@@ -73,29 +73,57 @@ export function getHomePost(): HomePostData {
 }
 
 /**
- * 모든 일반 블로그 포스트 목록 반환 (content/posts/ 내 마크다운 파일)
+ * 재귀적으로 content/posts/ 하위의 모든 마크다운 파일 목록 수집
+ */
+function getMarkdownFilesRecursively(dir: string, baseDir: string = dir): { fullPath: string; relativeSlug: string }[] {
+  let results: { fullPath: string; relativeSlug: string }[] = [];
+  if (!fs.existsSync(dir)) return results;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results = results.concat(getMarkdownFilesRecursively(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      // postsDirectory 대비 상대 경로 계산 (예: "dev/intro.md" -> "dev/intro" 또는 "intro")
+      const relPath = path.relative(baseDir, fullPath);
+      let slug = relPath.replace(/\.md$/, '').replace(/\\/g, '/');
+
+      // index.md 인 경우 부모 폴더명을 slug로 사용 (page bundle 패턴)
+      if (path.basename(fullPath) === 'index.md' && path.dirname(relPath) !== '.') {
+        slug = path.dirname(relPath).replace(/\\/g, '/');
+      }
+
+      results.push({ fullPath, relativeSlug: slug });
+    }
+  }
+
+  return results;
+}
+
+/**
+ * 모든 일반 블로그 포스트 목록 반환 (content/posts/ 내 마크다운 파일, 하위 폴더 재귀 탐색)
  */
 export function getAllPosts(): PostMetaData[] {
   ensureDirectoriesExist();
 
-  const fileNames = fs.readdirSync(postsDirectory);
+  const files = getMarkdownFilesRecursively(postsDirectory);
   const allPostsData: PostMetaData[] = [];
 
-  for (const fileName of fileNames) {
-    if (!fileName.endsWith('.md')) continue;
-
-    const slug = fileName.replace(/\.md$/, '');
-    const fullPath = path.join(postsDirectory, fileName);
-
+  for (const { fullPath, relativeSlug } of files) {
     try {
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const { data, content } = matter(fileContents);
 
+      // slug 내 / 가 포함되어 있으면 URL 호환용 슬러그 변환 (예: "dev/intro" -> "dev-intro" 또는 단순 이름)
+      const cleanSlug = relativeSlug.replace(/\//g, '-').toLowerCase();
+
       const post: PostMetaData = {
-        slug,
-        title: data.title || slug.replace(/-/g, ' '),
+        slug: cleanSlug,
+        title: data.title || path.basename(fullPath, '.md').replace(/-/g, ' '),
         date: data.date ? String(data.date) : new Date().toISOString().split('T')[0],
-        category: data.category || 'General',
+        category: data.category || (relativeSlug.includes('/') ? relativeSlug.split('/')[0] : 'General'),
         tags: Array.isArray(data.tags) ? data.tags : [],
         summary: data.summary || content.slice(0, 120).replace(/[#*`>]/g, '').trim() + '...',
         draft: Boolean(data.draft),
@@ -106,7 +134,7 @@ export function getAllPosts(): PostMetaData[] {
         allPostsData.push(post);
       }
     } catch (error) {
-      console.error(`Error parsing markdown file ${fileName}:`, error);
+      console.error(`Error parsing markdown file ${fullPath}:`, error);
     }
   }
 
@@ -114,7 +142,7 @@ export function getAllPosts(): PostMetaData[] {
 }
 
 /**
- * 단일 포스트 원본 데이터 가져오기 (content/posts/ 내 파일 대상)
+ * 단일 포스트 원본 데이터 가져오기
  */
 export function getPostBySlug(slug: string): PostDetail | null {
   ensureDirectoriesExist();
@@ -122,34 +150,30 @@ export function getPostBySlug(slug: string): PostDetail | null {
   if (!slug) return null;
 
   try {
-    const decodedSlug = decodeURIComponent(slug).trim();
-    let targetFileName = `${decodedSlug}.md`;
-    let fullPath = path.join(postsDirectory, targetFileName);
+    const decodedSlug = decodeURIComponent(slug).trim().toLowerCase();
+    const files = getMarkdownFilesRecursively(postsDirectory);
 
-    if (!fs.existsSync(fullPath)) {
-      const files = fs.readdirSync(postsDirectory);
-      const matched = files.find(
-        (f) => f.endsWith('.md') && f.replace(/\.md$/, '').toLowerCase() === decodedSlug.toLowerCase()
-      );
+    const targetFile = files.find(({ relativeSlug }) => {
+      const cleanSlug = relativeSlug.replace(/\//g, '-').toLowerCase();
+      const fileNameOnly = path.basename(relativeSlug).toLowerCase();
+      return cleanSlug === decodedSlug || fileNameOnly === decodedSlug;
+    });
 
-      if (matched) {
-        fullPath = path.join(postsDirectory, matched);
-      } else {
-        console.warn(`Post not found for slug: ${slug} (decoded: ${decodedSlug})`);
-        return null;
-      }
+    if (!targetFile) {
+      console.warn(`Post not found for slug: ${slug}`);
+      return null;
     }
 
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileContents = fs.readFileSync(targetFile.fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    const actualSlug = path.basename(fullPath, '.md');
+    const cleanSlug = targetFile.relativeSlug.replace(/\//g, '-').toLowerCase();
 
     return {
-      slug: actualSlug,
-      title: data.title || actualSlug.replace(/-/g, ' '),
+      slug: cleanSlug,
+      title: data.title || path.basename(targetFile.fullPath, '.md').replace(/-/g, ' '),
       date: data.date ? String(data.date) : new Date().toISOString().split('T')[0],
-      category: data.category || 'General',
+      category: data.category || (targetFile.relativeSlug.includes('/') ? targetFile.relativeSlug.split('/')[0] : 'General'),
       tags: Array.isArray(data.tags) ? data.tags : [],
       summary: data.summary || content.slice(0, 120).trim() + '...',
       draft: Boolean(data.draft),

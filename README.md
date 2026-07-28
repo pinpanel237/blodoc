@@ -44,9 +44,12 @@ npm run build
 
 ## Content Management
 
-- **Blog Posts**: Add your markdown notes under `content/posts/*.md`.
+- **Blog Posts**: Add your markdown notes under `content/posts/*.md` (subdirectories supported).
 - **Layout & Home Config**: Customize main banner text, description, and GitHub links via `content/layout/home.md`.
-- **Image Assets**: Place images in `content/assets/`, which are automatically synced to `public/assets/` during build.
+- **Image Assets**:
+  - **Single Assets Directory**: `content/assets/photo.png`
+  - **Per-Post Subdirectories (Recommended)**: `content/assets/post-name/photo.png` or `content/posts/post-name/photo.png`
+  - Images are automatically copied recursively to `public/assets/` during build and seamlessly linked via `![[post-name/photo.png]]` or relative paths.
 
 ---
 
@@ -88,20 +91,32 @@ github: https://github.com/your-username/blodoc   # GitHub profile/repo link
 
 ---
 
-## Environment Variables Setup (`NEXT_PUBLIC_SITE_URL`)
+## Environment Variables Setup (`NEXT_PUBLIC_SITE_URL` & `CONTENT_GIT_REPO`)
 
-Use environment variables to configure site domain URLs for development and production (Vercel) environments. If not set, defaults to `http://localhost:3000` in development and default Vercel URLs in production.
+Use environment variables to configure site domain URLs and remote Obsidian Git repositories for development and production (Vercel) environments.
 
-### 1. Local Environment Setup (`.env.local`)
+### 1. Key Environment Variables
+
+| Variable | Description | Example |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_SITE_URL` | Main blog domain (used for sitemap.xml & SEO) | `https://your-blog-domain.vercel.app` |
+| `CONTENT_GIT_REPO` | **(Optional)** Remote Obsidian Git repository URL for production | `https://github.com/username/obsidian-content.git` |
+
+> [!TIP]
+> **Remote Content Git Repo (`CONTENT_GIT_REPO`)**:
+> If `CONTENT_GIT_REPO` is specified, the build process (`prebuild`) will automatically clone the remote repository into the `content/` folder before generating static HTML pages. If left unset, it falls back to using local `/content` files for testing.
+
+### 2. Local Environment Setup (`.env.local`)
 Create `.env.local` in the project root:
 ```env
-NEXT_PUBLIC_SITE_URL=https://your-custom-domain.com
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+# CONTENT_GIT_REPO=https://github.com/username/your-obsidian-repo.git
 ```
 
-### 2. Vercel Deployment Environment Setup
-In your Vercel Dashboard (`Settings -> Environment Variables`), add the following key:
-- **Key**: `NEXT_PUBLIC_SITE_URL`
-- **Value**: `https://your-blog-domain.vercel.app` (or custom domain)
+### 3. Vercel Deployment Environment Setup
+In your Vercel Dashboard (`Settings -> Environment Variables`), add key-value pairs:
+- **Key**: `NEXT_PUBLIC_SITE_URL` / **Value**: `https://your-blog-domain.vercel.app`
+- **Key**: `CONTENT_GIT_REPO` / **Value**: `https://github.com/username/your-obsidian-repo.git` (For private repos, combine with GitHub PAT: `https://<PAT>@github.com/username/repo.git`)
 
 ---
 
