@@ -86,7 +86,8 @@ Next.js 앱을 Vercel에 배포할 때 자주 발생하는 빌드 실패 및 런
 ```text
 blodoc/
 ├── docs/                     <-- [현재 폴더] 분석 및 문서화 자료
-│   └── blog-architecture-analysis.md
+│   ├── blog-architecture-analysis.md
+│   └── feature-roadmap.md
 ├── content/                  <-- Obsidian 연동 마크다운 및 이미지 저장소
 │   ├── assets/               <-- Obsidian 첨부 이미지
 │   ├── posts/                <-- 마크다운 포스트 파일들 (원형 유지를 위한 사용자 전용)
@@ -132,6 +133,44 @@ blodoc/
 ### 2) 동기화 동작 원리 (`scripts/fetch-content.mjs`)
 * `npm run build` 또는 `npm run prebuild` 실행 시 `CONTENT_GIT_REPO` 환경변수 유무를 체크합니다.
 * 환경변수가 등록되어 있으면 기존 `/content` 폴더를 초기화한 후 원격 Git 저장소를 `git clone --depth 1`로 다운로드 받아 빌드에 사용합니다.
+
+---
+
+## 📦 8. 원격 콘텐츠 GitHub 저장소 (`CONTENT_GIT_REPO`) 디렉토리 구조 규격
+
+옵시디언(Obsidian) 앱에서 직접 작성하고 푸시(Git Push)하는 **독립 원격 콘텐츠 저장소**의 표준 폴더 레이아웃 구조 및 명세입니다. (이 저장소의 루트 전체가 빌드 타임에 `content/` 폴더로 1:1 동기화됩니다.)
+
+```text
+obsidian-content-repo/           <-- (CONTENT_GIT_REPO 원격 저장소 루트)
+├── posts/                      <-- [필수] 블로그 포스트 마크다운 노트 (.md)
+│   ├── tech/                   <-- (선택) 카테고리별 하위 폴더 분류 가능
+│   │   └── nextjs-ssg.md
+│   ├── daily/
+│   │   └── 2026-07-log.md
+│   └── page-bundle-example/    <-- (선택) 게시글 번들 방식
+│       ├── index.md
+│       └── local-image.png
+├── layout/                     <-- [필수] 메인 블로그 대문/배너 설정 문서
+│   └── home.md                 <-- 메인 히어로 타이핑 타이틀 & 소개글 Frontmatter
+├── assets/                     <-- [필수] 옵시디언 첨부 이미지 & 미디어
+│   ├── profile.png
+│   └── tech/                   <-- 카테고리/게시글별 서브 에셋 폴더
+│       └── architecture.png
+├── comments/                   <-- [선택] 마크다운 기반 방문자 댓글 데이터
+└── analytics/                  <-- [선택] 1일 1회 집계 일일 방문자/좋아요 요약 노트
+```
+
+### 📌 주요 구성 요도 설명
+
+1. **`posts/` (포스트 노트)**:
+   - 옵시디언에서 작성한 실제 마크다운 블로그 포스트가 저장됩니다.
+   - Frontmatter (`title`, `date`, `tags`, `category`, `draft` 등) 표준 표기를 사용합니다.
+   - 서브 폴더 깊이에 상관없이 파서가 재귀적으로 탐색하여 동적 슬러그(`/posts/slug`)를 생성합니다.
+2. **`layout/home.md` (메인 배너 설정)**:
+   - 블로그 메인 화면 상단 히어로 배너의 대제목, 대표 소개글, GitHub 프로필 링크를 정의하는 마크다운 파일입니다.
+3. **`assets/` (첨부 미디어 자원)**:
+   - 옵시디언 노트 내 `![[photo.png]]` 또는 `![[tech/architecture.png]]` 형태로 삽입된 이미지가 저장됩니다.
+   - 빌드 시 `public/assets/`로 자동 복사되어 정적 URL로 서빙됩니다.
 
 ---
 
