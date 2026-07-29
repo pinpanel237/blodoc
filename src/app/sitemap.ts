@@ -12,12 +12,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
 
   // 모든 포스트 페이지 동적 URL 매핑
-  const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/posts/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
+  const postUrls: MetadataRoute.Sitemap = posts.map((post) => {
+    const parsedDate = new Date(post.date);
+    const isValidDate = !isNaN(parsedDate.getTime());
+    return {
+      url: `${baseUrl}/posts/${post.slug}`,
+      lastModified: isValidDate ? parsedDate : new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    };
+  });
 
   // 메인 페이지 및 기본 경로
   const routes: MetadataRoute.Sitemap = [

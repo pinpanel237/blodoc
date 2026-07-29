@@ -324,13 +324,14 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .post-hero-title, .featu
 }
 
 .post-hero-title {
-  font-size: 3.4rem;
+  font-size: 3.2rem;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.25;
   letter-spacing: -0.035em;
   margin-bottom: 1.25rem;
   color: #FFFFFF;
-  max-width: 900px;
+  max-width: 100%;
+  word-break: keep-all;
 }
 
 @media (max-width: 768px) {
@@ -465,6 +466,8 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .post-hero-title, .featu
   color: var(--text-primary);
   letter-spacing: -0.03em;
   font-family: 'CustomTitle', sans-serif;
+  max-width: 100%;
+  word-break: keep-all;
 }
 
 .featured-summary {
@@ -472,6 +475,23 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .post-hero-title, .featu
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-summary {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Secondary Bento Stack */
@@ -527,6 +547,25 @@ h1, h2, h3, h4, h5, h6, .logo-text, .flouna-hero-title, .post-hero-title, .featu
   color: #FFFFFF;
   border-color: var(--accent-indigo);
   box-shadow: none;
+}
+
+.sub-chip-btn {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sub-chip-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-indigo);
+}
+
+.sub-chip-btn.active {
+  background: var(--accent-indigo);
+  color: #FFFFFF;
+  border-color: var(--accent-indigo);
 }
 
 /* Dribbble Visual Posts Grid */

@@ -29,3 +29,14 @@ next-env.d.ts
 
 # build temp assets
 # public/assets (copied from content/assets during build)
+
+# python virtual environment & cache
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# backup scripts
+scripts/backup_tistory.py
+*tistory_backup*
+

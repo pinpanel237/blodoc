@@ -62,7 +62,6 @@ export default function HomePage() {
                       <div className="author-avatar">OP</div>
                       <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{featuredPost.date}</span>
                     </div>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>3분 읽기</span>
                   </div>
                 </div>
               </Link>
@@ -82,9 +81,13 @@ export default function HomePage() {
                         {post.summary}
                       </p>
                     </div>
-                    <div className="card-footer" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{post.date}</span>
-                      <span className="tag-pill astryx-token-tag" style={{ fontSize: '0.75rem' }}>#{post.tags[0] || 'Note'}</span>
+                    <div className="card-footer" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.85rem', marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{post.date}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', minHeight: '1.5rem', marginTop: '0.25rem' }}>
+                        <span className="tag-pill astryx-token-tag" style={{ fontSize: '0.75rem' }}>#{post.tags[0] || 'Note'}</span>
+                      </div>
                     </div>
                   </Link>
                 ))}

@@ -44,6 +44,61 @@ function ensureDirectoriesExist() {
   }
 }
 
+export function formatHumanDate(dateStr: string): string {
+  if (!dateStr) return '';
+  try {
+    const cleanStr = dateStr.trim();
+    const d = new Date(cleanStr);
+    if (isNaN(d.getTime())) {
+      const parts = cleanStr.split('T')[0].split('-');
+      if (parts.length === 3) {
+        return `${parts[0]}년 ${parseInt(parts[1], 10)}월 ${parseInt(parts[2], 10)}일`;
+      }
+      return cleanStr.split('T')[0];
+    }
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    return `${year}년 ${month}월 ${day}일`;
+  } catch {
+    return dateStr.split('T')[0];
+  }
+}
+
+export function formatHumanDateTime(dateStr: string): string {
+  if (!dateStr) return '';
+  try {
+    const cleanStr = dateStr.trim();
+    const d = new Date(cleanStr);
+    if (isNaN(d.getTime())) {
+      return formatHumanDate(dateStr);
+    }
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? '오후' : '오전';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    return `${year}년 ${month}월 ${day}일 ${ampm} ${hours}:${minutes}`;
+  } catch {
+    return formatHumanDate(dateStr);
+  }
+}
+
+export function extractCleanSummary(rawContent: string): string {
+  const clean = rawContent
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[.*?\]\(.*?\)/g, '')
+    .replace(/[#*`>|~-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  
+  return clean.length > 120 ? clean.slice(0, 120) + '...' : clean;
+}
+
 /**
  * 기본 레이아웃 메인 설정 문서(content/layout/home.md) 데이터 추출
  */
@@ -151,15 +206,27 @@ export function getAllPosts(): PostMetaData[] {
       // slug 내 / 가 포함되어 있으면 URL 호환용 슬러그 변환 (예: "dev/intro" -> "dev-intro" 또는 단순 이름)
       const cleanSlug = relativeSlug.replace(/\//g, '-').toLowerCase();
 
+      let extractedThumbnail = data.thumbnail || undefined;
+      if (!extractedThumbnail) {
+        const imageMatch = content.match(/!\[.*?\]\((?:\.\.\/|\/)?assets\/(.*?)\)/) || content.match(/!\[\[(.*?)\]\]/);
+        if (imageMatch && imageMatch[1]) {
+          const imgName = imageMatch[1].trim();
+          extractedThumbnail = `/assets/${imgName}`;
+        }
+      }
+
+      const rawDate = data.date ? String(data.date) : new Date().toISOString();
+      const humanDate = formatHumanDate(rawDate);
+
       const post: PostMetaData = {
         slug: cleanSlug,
         title: data.title || path.basename(fullPath, '.md').replace(/-/g, ' '),
-        date: data.date ? String(data.date) : new Date().toISOString().split('T')[0],
+        date: humanDate,
         category: data.category || (relativeSlug.includes('/') ? relativeSlug.split('/')[0] : 'General'),
         tags: Array.isArray(data.tags) ? data.tags : [],
-        summary: data.summary || content.slice(0, 120).replace(/[#*`>]/g, '').trim() + '...',
+        summary: data.summary || extractCleanSummary(content),
         draft: Boolean(data.draft),
-        thumbnail: data.thumbnail || undefined,
+        thumbnail: extractedThumbnail,
       };
 
       if (!post.draft) {
@@ -201,15 +268,27 @@ export function getPostBySlug(slug: string): PostDetail | null {
 
     const cleanSlug = targetFile.relativeSlug.replace(/\//g, '-').toLowerCase();
 
+    let extractedThumbnail = data.thumbnail || undefined;
+    if (!extractedThumbnail) {
+      const imageMatch = content.match(/!\[.*?\]\((?:\.\.\/|\/)?assets\/(.*?)\)/) || content.match(/!\[\[(.*?)\]\]/);
+      if (imageMatch && imageMatch[1]) {
+        const imgName = imageMatch[1].trim();
+        extractedThumbnail = `/assets/${imgName}`;
+      }
+    }
+
+    const rawDate = data.date ? String(data.date) : new Date().toISOString();
+    const humanDateTime = formatHumanDateTime(rawDate);
+
     return {
       slug: cleanSlug,
       title: data.title || path.basename(targetFile.fullPath, '.md').replace(/-/g, ' '),
-      date: data.date ? String(data.date) : new Date().toISOString().split('T')[0],
+      date: humanDateTime,
       category: data.category || (targetFile.relativeSlug.includes('/') ? targetFile.relativeSlug.split('/')[0] : 'General'),
       tags: Array.isArray(data.tags) ? data.tags : [],
-      summary: data.summary || content.slice(0, 120).trim() + '...',
+      summary: data.summary || extractCleanSummary(content),
       draft: Boolean(data.draft),
-      thumbnail: data.thumbnail || undefined,
+      thumbnail: extractedThumbnail,
       content,
     };
   } catch (error) {

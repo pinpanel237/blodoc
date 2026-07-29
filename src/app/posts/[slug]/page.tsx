@@ -66,9 +66,8 @@ export default async function PostPage({
               className="card-category astryx-badge"
               style={{ textDecoration: 'none' }}
             >
-              {post.category}
+              {post.category ? post.category.split('/').join(' › ') : ''}
             </Link>
-            <span style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.7)' }}>3분 읽기</span>
           </div>
 
           <h1 className="post-hero-title">
@@ -86,7 +85,7 @@ export default async function PostPage({
       {/* 📖 본문 아티클 영역 */}
       <div className="main-container post-content-container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3.5rem' }}>
-          <article>
+          <article style={{ minWidth: 0 }}>
             <div
               className="markdown-body"
               dangerouslySetInnerHTML={{ __html: contentHtml }}
