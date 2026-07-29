@@ -40,13 +40,13 @@ pip install requests beautifulsoup4
 
 ```bash
 # 방식 A: 블로그 아이디만 입력
-python scripts/backup_tistory.py megamaker
+python scripts/backup_tistory.py your-blog-id
 
 # 방식 B: 도메인 전체 입력
-python scripts/backup_tistory.py megamaker.tistory.com
+python scripts/backup_tistory.py your-blog-id.tistory.com
 
 # 방식 C: https 포함 URL 입력
-python scripts/backup_tistory.py https://megamaker.tistory.com
+python scripts/backup_tistory.py https://your-blog-id.tistory.com
 ```
 
 ---
