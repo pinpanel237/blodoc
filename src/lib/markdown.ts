@@ -70,10 +70,10 @@ function wrapCodeLines(highlightedHtml: string): string {
  * 아이콘 없는 순수 언어 이름 텍스트 파스텔 겹침 탭 배지 구조로 후처리 변환
  */
 function processCodeBlocks(htmlContent: string): string {
-  // <pre...> 및 <code...> 태그의 임의 속성 및 태그 간 공백/줄바꿈을 완벽하게 수용하는 견고한 정규식
-  const codeBlockRegex = /<pre(?:\s+[^>]*)?>\s*<code(?:\s+([^>]*))?>([\s\S]*?)<\/code>\s*<\/pre>/gi;
+  // <pre...> 및 <code...> 태그 전체 속성과 공백/줄바꿈을 완벽하게 포착하는 견고한 정규식
+  const codeBlockRegex = /<pre(\s+[^>]*)?>\s*<code(\s+[^>]*)?>([\s\S]*?)<\/code>\s*<\/pre>/gi;
 
-  return htmlContent.replace(codeBlockRegex, (match, codeAttrs = '', rawCode) => {
+  return htmlContent.replace(codeBlockRegex, (match, preAttrs = '', codeAttrs = '', rawCode) => {
     // html 엔티티 디코딩
     const unescapedCode = rawCode
       .replace(/&lt;/g, '<')
@@ -82,12 +82,33 @@ function processCodeBlocks(htmlContent: string): string {
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'");
 
-    // class 속성 또는 속성 텍스트에서 language-xxx / lang-xxx 추출
-    const classMatch = codeAttrs.match(/class=["']([^"']*)["']/i);
-    const classAttr = classMatch ? classMatch[1] : codeAttrs;
+    // preAttrs 및 codeAttrs 모두에서 class 속성 추출
+    const combinedAttrs = `${preAttrs} ${codeAttrs}`;
+    const classMatches = combinedAttrs.matchAll(/class=["']([^"']*)["']/gi);
+    let classAttrString = '';
+    for (const m of classMatches) {
+      classAttrString += ' ' + m[1];
+    }
 
-    const langMatch = classAttr.match(/(?:language|lang)-([^\s"':]+)/i);
-    const rawLang = langMatch ? langMatch[1].toLowerCase() : 'text';
+    // language-xxx 또는 lang-xxx 패턴 추출
+    const langMatch = classAttrString.match(/(?:language|lang)-([^\s"':]+)/i);
+    let rawLang = langMatch ? langMatch[1].toLowerCase() : '';
+
+    // 접두사가 없는 경우 단어 중 지원되는 언어 식별자 검색
+    if (!rawLang) {
+      const words = classAttrString.trim().split(/\s+/);
+      for (const w of words) {
+        const lower = w.toLowerCase();
+        if (LANGUAGE_MAP[lower] || (hljs.getLanguage && hljs.getLanguage(lower))) {
+          rawLang = lower;
+          break;
+        }
+      }
+    }
+
+    if (!rawLang) {
+      rawLang = 'text';
+    }
 
     const langInfo = LANGUAGE_MAP[rawLang] || {
       label: rawLang !== 'text' ? rawLang.toUpperCase() : 'CODE',
