@@ -1,4 +1,4 @@
-/* Clean Minimal Markdown Body (No AI Gradient / No Color Borders) */
+/* Clean Minimal Markdown Body */
 .markdown-body {
   font-size: 1.05rem !important;
   line-height: 1.8 !important;
@@ -86,7 +86,7 @@
   display: block !important;
 }
 
-/* 무채색 미니멀 인용구 (컬러 보더 및 그라데이션 완전 제거) */
+/* 미니멀 인용구 */
 .markdown-body blockquote {
   border-left: 2px solid var(--text-muted) !important;
   background: transparent !important;
@@ -96,7 +96,7 @@
   font-style: normal !important;
 }
 
-/* 🔗 선명하고 세련된 파란색 하이퍼링크 스타일 (Blue Link with Underline) */
+/* 🔗 파란색 하이퍼링크 스타일 */
 .markdown-body a,
 .wikilink {
   color: #3B82F6 !important;
@@ -115,7 +115,7 @@
   opacity: 0.9 !important;
 }
 
-/* 무채색 콜아웃 박스 (모든 색상 및 보더 완전 제거) */
+/* 콜아웃 박스 */
 .callout {
   background: rgba(255, 255, 255, 0.02) !important;
   border: 1px solid var(--border-color) !important;
@@ -149,30 +149,205 @@
   display: block !important;
 }
 
-/* 코드 블록 (무채색) */
-.markdown-body code {
+/* 인라인 코드 */
+.markdown-body :not(pre) > code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
   font-size: 0.875em !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: var(--text-primary) !important;
-  padding: 0.15rem 0.4rem !important;
-  border-radius: 0.25rem !important;
-  border: 1px solid var(--border-color) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #F1F5F9 !important;
+  padding: 0.15rem 0.45rem !important;
+  border-radius: 0.3rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
-.markdown-body pre {
-  background: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
-  padding: 1.25rem 1.5rem !important;
+/* ==========================================================================
+   🎨 IDE / 터미널 헤더 바 스타일 & 불투명 파스텔 칩 태그
+   ========================================================================== */
+.code-block-wrapper {
+  margin: 2rem 0 1.75rem !important;
   border-radius: 0.75rem !important;
+  border: 1px solid #2D3342 !important;
+  background: #1F232E !important;
+  box-shadow: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* 🖥️ 모던 상단 헤더 바 (언어 태그 & 복사 버튼 배치) */
+.code-block-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.5rem 0.85rem 0.5rem 1rem !important;
+  background: #151821 !important;
+  border-bottom: 1px solid #282D3D !important;
+  user-select: none !important;
+}
+
+.code-block-header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* 🏷️ 헤더 내부 언어 파스텔 뱃지 태그 */
+.code-block-tag {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 0.73rem !important;
+  font-weight: 800 !important;
+  padding: 0.22rem 0.65rem !important;
+  border-radius: 0.35rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  letter-spacing: 0.06em !important;
+  background: #2A2E3D !important;
+  color: #F8FAFC !important;
+  border: 1px solid #3E4558 !important;
+  box-shadow: none !important;
+  user-select: none !important;
+}
+
+.tag-label {
+  line-height: 1 !important;
+}
+
+/* 🎨 100% 불투명(Solid) 언어별 파스텔 뱃지 컬러 팔레트 */
+.lang-tag-js,
+.lang-tag-jsx {
+  background: #FDE047 !important;
+  color: #1E1B4B !important;
+  border: none !important;
+}
+
+.lang-tag-ts,
+.lang-tag-tsx {
+  background: #38BDF8 !important;
+  color: #0F172A !important;
+  border: none !important;
+}
+
+.lang-tag-python {
+  background: #818CF8 !important;
+  color: #0F172A !important;
+  border: none !important;
+}
+
+.lang-tag-html {
+  background: #FB923C !important;
+  color: #1C1917 !important;
+  border: none !important;
+}
+
+.lang-tag-css {
+  background: #A78BFA !important;
+  color: #0F172A !important;
+  border: none !important;
+}
+
+.lang-tag-json {
+  background: #34D399 !important;
+  color: #064E3B !important;
+  border: none !important;
+}
+
+.lang-tag-bash {
+  background: #4ADE80 !important;
+  color: #064E3B !important;
+  border: none !important;
+}
+
+.lang-tag-sql {
+  background: #C084FC !important;
+  color: #3B0764 !important;
+  border: none !important;
+}
+
+.lang-tag-cpp {
+  background: #60A5FA !important;
+  color: #0F172A !important;
+  border: none !important;
+}
+
+.lang-tag-rust {
+  background: #F97316 !important;
+  color: #1C1917 !important;
+  border: none !important;
+}
+
+.lang-tag-go {
+  background: #22D3EE !important;
+  color: #083344 !important;
+  border: none !important;
+}
+
+.lang-tag-java {
+  background: #FED7AA !important;
+  color: #7C2D12 !important;
+  border: none !important;
+}
+
+/* 🖱️ 헤더 바 내부에 배치되는 복사 버튼 */
+.code-copy-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+  padding: 0.3rem 0.75rem !important;
+  min-height: 28px !important;
+  border-radius: 0.35rem !important;
+  background: #252936 !important;
+  color: #F1F5F9 !important;
+  border: 1px solid #3B4254 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  margin-left: auto !important;
+}
+
+.code-copy-btn:hover {
+  background: #33394A !important;
+  color: #FFFFFF !important;
+  border-color: #4C556C !important;
+  transform: translateY(-1px) !important;
+}
+
+.code-copy-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.code-copy-btn.copied {
+  background: #059669 !important;
+  color: #FFFFFF !important;
+  border-color: #10B981 !important;
+}
+
+/* ==========================================================================
+   🔢 완전 밀착 극한 촘촘한 행간 & 상단 여유 내부 패딩
+   ========================================================================== */
+.markdown-body pre {
+  background: #1F232E !important;
+  color: #E2E8F0 !important;
+  padding: 1.1rem 1.25rem 1.25rem !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 0 0.75rem 0.75rem !important;
   overflow-x: auto !important;
-  max-width: 100% !important;
-  margin: 1.5rem 0 !important;
-  font-size: 0.9rem !important;
-  line-height: 1.6 !important;
-  border: 1px solid var(--border-color) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.0 !important;
   white-space: pre !important;
   word-break: normal !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
 .markdown-body pre code {
@@ -182,26 +357,124 @@
   border: none !important;
   white-space: pre !important;
   word-break: normal !important;
+  font-size: inherit !important;
+  line-height: 1.0 !important;
+  display: block !important;
 }
 
-/* 🖱️ 코드 블록 항상 노출되는 프리미엄 커스텀 가로 스크롤바 */
+/* 각 행 (라인) - 완전 밀착 */
+.markdown-body pre code .code-line {
+  display: block !important;
+  line-height: 1.0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: pre !important;
+}
+
+/* 라인 번호 영역 */
+.markdown-body pre code .line-number {
+  display: inline-block !important;
+  width: 2.3rem !important;
+  text-align: right !important;
+  padding-right: 0.9rem !important;
+  color: #525E75 !important;
+  user-select: none !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  opacity: 0.65 !important;
+  flex-shrink: 0 !important;
+  line-height: 1.0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+/* 코드 본문 영역 */
+.markdown-body pre code .line-content {
+  display: inline !important;
+  white-space: pre !important;
+  word-break: normal !important;
+  line-height: 1.0 !important;
+}
+
+/* 🌸 파스텔 구문 하이라이트 토큰 */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #D8B4FE !important;
+  font-weight: 700 !important;
+}
+
+.hljs-string,
+.hljs-doctag,
+.hljs-regexp {
+  color: #6EE7B7 !important;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id,
+.hljs-title.function_ {
+  color: #7DD3FC !important;
+  font-weight: 700 !important;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: #FDE047 !important;
+  font-weight: 600 !important;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-attr,
+.hljs-property {
+  color: #FCA5A5 !important;
+}
+
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-params {
+  color: #FDBA74 !important;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #94A3B8 !important;
+  font-style: italic !important;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link {
+  color: #67E8F9 !important;
+}
+
+.hljs-tag,
+.hljs-name {
+  color: #F472B6 !important;
+}
+
+.hljs-punctuation {
+  color: #CBD5E1 !important;
+}
+
+/* 스크롤바 디자인 */
 .markdown-body pre::-webkit-scrollbar {
-  height: 8px !important;
+  height: 7px !important;
   display: block !important;
 }
 
 .markdown-body pre::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-radius: 4px !important;
-  margin-left: 1.25rem !important;
-  margin-right: 1.25rem !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-radius: 3px !important;
+  margin: 0 1rem !important;
 }
 
 .markdown-body pre::-webkit-scrollbar-thumb {
-  background: var(--accent-indigo, #6366F1) !important;
-  border-radius: 4px !important;
+  background: rgba(216, 180, 254, 0.4) !important;
+  border-radius: 3px !important;
 }
 
 .markdown-body pre::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-purple, #818CF8) !important;
+  background: rgba(216, 180, 254, 0.7) !important;
 }
