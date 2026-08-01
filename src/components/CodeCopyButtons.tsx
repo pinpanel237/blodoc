@@ -67,17 +67,36 @@ export default function CodeCopyButtons() {
           wrapper.appendChild(btn);
         }
       });
-      return;
     }
 
-    // 레거시 일반 pre 호환
+    // 레거시 일반 pre 호환 및 누락된 래퍼 보완
     const legacyBlocks = Array.from(document.querySelectorAll('.markdown-body pre'));
     legacyBlocks.forEach((pre, index) => {
       if (pre.querySelector('.code-copy-btn') || pre.parentElement?.classList.contains('code-block-wrapper')) return;
 
       const wrapper = document.createElement('div');
       wrapper.className = 'code-block-wrapper';
+
+      const header = document.createElement('div');
+      header.className = 'code-block-header';
+      
+      const headerLeft = document.createElement('div');
+      headerLeft.className = 'code-block-header-left';
+      
+      const codeTag = pre.querySelector('code');
+      const classAttr = codeTag?.className || '';
+      const langMatch = classAttr.match(/(?:language|lang)-([^\s"':]+)/i);
+      const rawLang = langMatch ? langMatch[1].toUpperCase() : 'CODE';
+
+      headerLeft.innerHTML = `
+        <div class="code-block-tag lang-tag-${rawLang.toLowerCase()}">
+          <span class="tag-label">${rawLang}</span>
+        </div>
+      `;
+      header.appendChild(headerLeft);
+
       pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
       wrapper.appendChild(pre);
 
       const btn = document.createElement('button');
@@ -117,7 +136,7 @@ export default function CodeCopyButtons() {
         }
       };
 
-      wrapper.appendChild(btn);
+      header.appendChild(btn);
     });
   }, []);
 

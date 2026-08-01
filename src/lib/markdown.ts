@@ -70,9 +70,10 @@ function wrapCodeLines(highlightedHtml: string): string {
  * 아이콘 없는 순수 언어 이름 텍스트 파스텔 겹침 탭 배지 구조로 후처리 변환
  */
 function processCodeBlocks(htmlContent: string): string {
-  const codeBlockRegex = /<pre><code(?:\s+class="([^"]*)")?>([\s\S]*?)<\/code><\/pre>/gi;
+  // <pre...> 및 <code...> 태그의 임의 속성 및 태그 간 공백/줄바꿈을 완벽하게 수용하는 견고한 정규식
+  const codeBlockRegex = /<pre(?:\s+[^>]*)?>\s*<code(?:\s+([^>]*))?>([\s\S]*?)<\/code>\s*<\/pre>/gi;
 
-  return htmlContent.replace(codeBlockRegex, (match, classAttr = '', rawCode) => {
+  return htmlContent.replace(codeBlockRegex, (match, codeAttrs = '', rawCode) => {
     // html 엔티티 디코딩
     const unescapedCode = rawCode
       .replace(/&lt;/g, '<')
@@ -81,8 +82,11 @@ function processCodeBlocks(htmlContent: string): string {
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'");
 
-    // 언어명 추출
-    const langMatch = classAttr.match(/language-([^\s]+)/i);
+    // class 속성 또는 속성 텍스트에서 language-xxx / lang-xxx 추출
+    const classMatch = codeAttrs.match(/class=["']([^"']*)["']/i);
+    const classAttr = classMatch ? classMatch[1] : codeAttrs;
+
+    const langMatch = classAttr.match(/(?:language|lang)-([^\s"':]+)/i);
     const rawLang = langMatch ? langMatch[1].toLowerCase() : 'text';
 
     const langInfo = LANGUAGE_MAP[rawLang] || {
