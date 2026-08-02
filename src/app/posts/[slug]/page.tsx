@@ -66,7 +66,7 @@ export default async function PostPage({
 
           <div className="post-hero-meta">
             <span>작성일: {post.date}</span>
-            <span>태그: {post.tags.join(', ')}</span>
+            <span>{post.tags.map((tag) => `#${tag}`).join(' ')}</span>
           </div>
         </div>
       </section>
