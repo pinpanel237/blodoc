@@ -157,6 +157,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   >
                     <div className="search-result-header">
                       <span className="search-result-title">{post.title}</span>
+                    </div>
+                    <div className="search-result-meta">
                       <span className="search-result-category">{post.category}</span>
                     </div>
                     <p className="search-result-summary">{post.summary}</p>

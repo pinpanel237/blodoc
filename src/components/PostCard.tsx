@@ -44,7 +44,6 @@ export default function PostCard({ post }: { post: PostMetaData }) {
         <div className="card-footer" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div className="author-avatar">OP</div>
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
                 {post.date}
               </span>

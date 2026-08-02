@@ -59,7 +59,6 @@ export default function HomePage() {
                   </div>
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div className="author-avatar">OP</div>
                       <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{featuredPost.date}</span>
                     </div>
                   </div>
