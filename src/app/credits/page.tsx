@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getLayoutPage } from '@/lib/posts';
-import { parseObsidianMarkdown } from '@/lib/obsidian';
-import { remark } from 'remark';
-import html from 'remark-html';
-import gfm from 'remark-gfm';
+import { renderMarkdown } from '@/lib/markdown';
 import CodeCopyButtons from '@/components/CodeCopyButtons';
 import type { Metadata } from 'next';
 
@@ -22,14 +19,7 @@ export default async function CreditsPage() {
     notFound();
   }
 
-  const obsidianParsed = parseObsidianMarkdown(pageData.content);
-
-  const processedContent = await remark()
-    .use(gfm)
-    .use(html, { sanitize: false })
-    .process(obsidianParsed);
-
-  const contentHtml = processedContent.toString();
+  const contentHtml = await renderMarkdown(pageData.content);
 
   return (
     <div className="astryx-theme-root">

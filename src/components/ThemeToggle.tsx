@@ -28,20 +28,23 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       className="theme-btn"
       style={{
-        background: 'none',
-        border: '1px solid var(--border-color)',
+        background: 'rgba(255, 255, 255, 0.08)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '2rem',
-        padding: '0.4rem 0.85rem',
+        height: '2.1rem',
+        padding: '0 0.85rem',
         cursor: 'pointer',
-        color: 'var(--text-primary)',
+        color: '#F8FAFC',
         fontSize: '0.85rem',
         fontWeight: 600,
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '0.45rem',
         transition: 'all 0.25s ease',
         overflow: 'hidden',
         position: 'relative',
+        lineHeight: 1,
       }}
       aria-label="Theme toggle"
     >

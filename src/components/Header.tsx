@@ -43,9 +43,6 @@ export default function Header() {
               <span className="search-btn-label">검색</span>
             </button>
 
-            <Link href="/" className="nav-item">
-              포스트
-            </Link>
             {siteConfig.social.github && (
               <a
                 href={siteConfig.social.github}

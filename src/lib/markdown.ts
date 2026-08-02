@@ -4,6 +4,23 @@ import gfm from 'remark-gfm';
 import hljs from 'highlight.js';
 import { parseObsidianMarkdown } from './obsidian';
 
+// Tailwind CSS v4 프로덕션 빌드 퍼지(Purge) 방지용 Safelist 목록
+const _TAILWIND_SAFELIST = [
+  'markdown-body', 'wikilink', 'callout', 'callout-title', 'callout-note',
+  'callout-warning', 'callout-tip', 'callout-important', 'code-block-wrapper',
+  'code-block-header', 'code-block-header-left', 'code-block-tag', 'tag-label',
+  'lang-tag-js', 'lang-tag-jsx', 'lang-tag-ts', 'lang-tag-tsx', 'lang-tag-python',
+  'lang-tag-html', 'lang-tag-css', 'lang-tag-json', 'lang-tag-bash', 'lang-tag-sql',
+  'lang-tag-cpp', 'lang-tag-rust', 'lang-tag-go', 'lang-tag-java', 'code-copy-btn',
+  'copied', 'code-line', 'line-number', 'line-content', 'hljs', 'hljs-keyword',
+  'hljs-selector-tag', 'hljs-subst', 'hljs-string', 'hljs-doctag', 'hljs-regexp',
+  'hljs-title', 'hljs-section', 'hljs-selector-id', 'function_', 'hljs-number',
+  'hljs-literal', 'hljs-variable', 'hljs-template-variable', 'hljs-attribute',
+  'hljs-attr', 'hljs-property', 'hljs-type', 'hljs-params', 'hljs-comment',
+  'hljs-quote', 'hljs-symbol', 'hljs-bullet', 'hljs-link', 'hljs-tag',
+  'hljs-name', 'hljs-punctuation',
+];
+
 // 언어 표시명 및 키 표준화 맵
 const LANGUAGE_MAP: Record<string, { label: string; key: string }> = {
   js: { label: 'JAVASCRIPT', key: 'js' },
@@ -74,13 +91,17 @@ function processCodeBlocks(htmlContent: string): string {
   const codeBlockRegex = /<pre(\s+[^>]*)?>\s*<code(\s+[^>]*)?>([\s\S]*?)<\/code>\s*<\/pre>/gi;
 
   return htmlContent.replace(codeBlockRegex, (match, preAttrs = '', codeAttrs = '', rawCode) => {
-    // html 엔티티 디코딩
     const unescapedCode = rawCode
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'");
+      .replace(/&lt;/gi, '<')
+      .replace(/&#x3[Cc];/g, '<')
+      .replace(/&gt;/gi, '>')
+      .replace(/&#x3[Ee];/g, '>')
+      .replace(/&quot;/gi, '"')
+      .replace(/&#x22;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&#x27;/g, "'")
+      .replace(/&amp;/gi, '&')
+      .replace(/&#x26;/g, '&');
 
     // preAttrs 및 codeAttrs 모두에서 class 속성 추출
     const combinedAttrs = `${preAttrs} ${codeAttrs}`;

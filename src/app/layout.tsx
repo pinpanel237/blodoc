@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import '@/styles/globals.css';
-import '@/styles/markdown.css';
 import Header from '@/components/Header';
 import { siteConfig } from '@/site.config';
 import { getHomePost } from '@/lib/posts';
@@ -77,7 +76,6 @@ export default function RootLayout({
 
             <div className="slim-footer-links">
               <Link href="/">홈</Link>
-              <Link href="/#posts">최신 포스트</Link>
               <Link href="/credits">저작권 안내</Link>
               {githubUrl && (
                 <a href={githubUrl} target="_blank" rel="noopener noreferrer">

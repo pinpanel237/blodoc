@@ -122,15 +122,52 @@ blodoc/
 
 ## 🔗 7. 원격 Git 저장소 분리 및 환경변수 연동 가이드
 
-블로그 웹앱 저장소와 별개로 옵시디언 마크다운 전용 Git 저장소를 사용하는 구조입니다.
+블로그 웹앱 저장소와 별개로 옵시디언 마크다운 전용 Git 저장소를 사용하는 구조입니다. Private 저장소인 경우 환경변수를 통한 인증 정보 전달이 필수적입니다.
 
-### 1) 환경 변수 설정 (`CONTENT_GIT_REPO`)
+### 1) 환경 변수 기본 설정 (`CONTENT_GIT_REPO`)
 * **로컬 환경**: `.env.local`을 비워 두거나 작성하지 않으면 기존 `/content` 폴더의 로컬 테스트 마크다운을 사용합니다.
-* **프로덕션 (Vercel 등)**:
-  * Public 저장소: `CONTENT_GIT_REPO=https://github.com/username/obsidian-content.git`
-  * Private 저장소 (PAT 사용): `CONTENT_GIT_REPO=https://<GITHUB_PAT>@github.com/username/obsidian-content.git`
+* **Public 저장소**: `CONTENT_GIT_REPO=https://github.com/username/obsidian-content.git`
 
-### 2) 동기화 동작 원리 (`scripts/fetch-content.mjs`)
+---
+
+### 2) Private Git 저장소 인증 및 환경변수 지정 방법
+
+#### ① GitHub Personal Access Token (PAT)을 URL에 직접 포함
+가장 간편하게 빌드 환경(Vercel, CI/CD)에 적용할 수 있는 방식입니다.
+```env
+# Vercel / CI 환경변수 설정
+CONTENT_GIT_REPO=https://<GITHUB_PAT_TOKEN>@github.com/username/obsidian-content.git
+```
+> **참고**: GitHub 계정 **Settings > Developer Settings > Personal Access Tokens**에서 `repo` 읽기 권한을 가진 토큰을 생성하여 사용합니다.
+
+#### ② 토큰과 URL 환경변수를 분리하여 `git config insteadOf` 활용 (추천)
+보안 및 관리를 위해 토큰(`GH_TOKEN`)과 저장소 주소(`CONTENT_GIT_REPO`)를 분리하여 지정하는 방법입니다.
+
+1. **환경변수 등록**:
+   * `GH_TOKEN`: `ghp_xxxxxxxxxxxx` (Personal Access Token)
+   * `CONTENT_GIT_REPO`: `https://github.com/username/obsidian-content.git`
+
+2. **빌드 스크립트 실행 전 `git config` 자동 전환**:
+   ```bash
+   git config --global url."https://${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+   ```
+   이 설정을 적용하면 `git clone https://github.com/username/obsidian-content.git` 호출 시 Git이 자동으로 `${GH_TOKEN}` 인증 토큰을 삽입하여 처리합니다.
+
+#### ③ SSH Private Key 방식 (`GIT_SSH_COMMAND` 활용)
+SSH 키를 환경변수로 넘겨 Private 저장소에 접근하는 방식입니다.
+
+```bash
+# 환경변수에 Base64로 인코딩된 SSH Private Key 등록 (예: SSH_PRIVATE_KEY)
+echo "$SSH_PRIVATE_KEY" | base64 -d > /tmp/deploy_key
+chmod 600 /tmp/deploy_key
+
+export GIT_SSH_COMMAND="ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no"
+git clone git@github.com:username/obsidian-content.git
+```
+
+---
+
+### 3) 동기화 동작 원리 (`scripts/fetch-content.mjs`)
 * `npm run build` 또는 `npm run prebuild` 실행 시 `CONTENT_GIT_REPO` 환경변수 유무를 체크합니다.
 * 환경변수가 등록되어 있으면 기존 `/content` 폴더를 초기화한 후 원격 Git 저장소를 `git clone --depth 1`로 다운로드 받아 빌드에 사용합니다.
 

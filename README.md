@@ -2,9 +2,7 @@
 
 <p align="center">
   <a href="README.md"><b>English</b></a> |
-  <a href="README.ko.md"><b>한국어</b></a> |
-  <a href="README.ja.md"><b>日本語</b></a> |
-  <a href="README.zh.md"><b>中文</b></a>
+  <a href="README.ko.md"><b>한국어</b></a>
 </p>
 
 ---
@@ -116,7 +114,39 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ### 3. Vercel Deployment Environment Setup
 In your Vercel Dashboard (`Settings -> Environment Variables`), add key-value pairs:
 - **Key**: `NEXT_PUBLIC_SITE_URL` / **Value**: `https://your-blog-domain.vercel.app`
-- **Key**: `CONTENT_GIT_REPO` / **Value**: `https://github.com/username/your-obsidian-repo.git` (For private repos, combine with GitHub PAT: `https://<PAT>@github.com/username/repo.git`)
+- **Key**: `CONTENT_GIT_REPO` / **Value**: Refer to Private Repository Setup below
+
+> [!IMPORTANT]
+> **Private Git Repository Setup**:
+> If your repository is private, configure authentication using one of the following methods:
+> 1. **Direct PAT Embed in URL**:
+>    `CONTENT_GIT_REPO=https://<PAT_TOKEN>@github.com/username/your-obsidian-repo.git`
+> 2. **Token Separation with `git config insteadOf` (Recommended)**:
+>    - `GH_TOKEN`: `ghp_xxxxxxxxxxxx`
+>    - `CONTENT_GIT_REPO`: `https://github.com/username/your-obsidian-repo.git`
+>    - Pre-build command: `git config --global url."https://${GH_TOKEN}@github.com/".insteadOf "https://github.com/"`
+> 3. **SSH Key via `GIT_SSH_COMMAND`**:
+>    - Inject `GIT_SSH_COMMAND="ssh -i /path/to/key -o StrictHostKeyChecking=no"` and use SSH URL (`git@github.com:username/repo.git`)
+
+---
+
+## 🔄 원격 저장소 동기화 자동화 (Vercel Deploy Hook & GitHub Webhook)
+
+원격 게시글 저장소(`CONTENT_GIT_REPO`)에 새로운 글이 Push될 때 블로그 사이트가 자동으로 다시 빌드되어 게시글이 동기화되도록 설정하는 방법입니다.
+
+### 핵심 연동 3단계
+
+1. **Vercel Deploy Hook 생성**:
+   * Vercel Dashboard ➡ 프로젝트 선택 ➡ **Settings** ➡ **Git** 메뉴로 이동합니다.
+   * **Deploy Hooks** 섹션에서 새로운 훅(예: 이름 `github-content-sync`, 브랜치 `main`)을 만들고 제공되는 **Deploy Hook URL**을 복사합니다.
+2. **GitHub Webhook 등록**:
+   * 업로드된 **게시글 GitHub 저장소** ➡ **Settings** ➡ **Webhooks** ➡ **Add webhook**으로 이동합니다.
+   * **Payload URL**에 복사한 Vercel Deploy Hook URL을 붙여넣고, **Content type**을 `application/json`으로 지정한 뒤 저장합니다.
+3. **환경변수 설정 확인**:
+   * Vercel 프로젝트의 **Settings** ➡ **Environment Variables**에 `CONTENT_GIT_REPO` 주소가 올바르게 정의되어 있는지 확인합니다.
+
+> 💡 **상세 설정 및 가이드**:
+> 보다 자세한 연동 방식과 인증 토큰 설정 가이드는 [github-webhook-sync-guide.md](file:///Users/mypc/projects/blodoc/docs/github-webhook-sync-guide.md) 문서를 참고해 주세요.
 
 ---
 

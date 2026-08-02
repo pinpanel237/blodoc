@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
-import { parseObsidianMarkdown } from '@/lib/obsidian';
-import { remark } from 'remark';
-import html from 'remark-html';
-import gfm from 'remark-gfm';
+import { renderMarkdown } from '@/lib/markdown';
 import TOC from '@/components/TOC';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import CodeCopyButtons from '@/components/CodeCopyButtons';
@@ -37,14 +34,7 @@ export default async function PostPage({
     notFound();
   }
 
-  const obsidianParsed = parseObsidianMarkdown(post.content);
-
-  const processedContent = await remark()
-    .use(gfm)
-    .use(html, { sanitize: false })
-    .process(obsidianParsed);
-
-  const contentHtml = processedContent.toString();
+  const contentHtml = await renderMarkdown(post.content);
   const coverImgSrc = post.thumbnail || '/assets/hero-banner.png';
 
   return (
@@ -76,7 +66,6 @@ export default async function PostPage({
 
           <div className="post-hero-meta">
             <span>작성일: {post.date}</span>
-            <span style={{ opacity: 0.5 }}>|</span>
             <span>태그: {post.tags.join(', ')}</span>
           </div>
         </div>
@@ -84,8 +73,8 @@ export default async function PostPage({
 
       {/* 📖 본문 아티클 영역 */}
       <div className="main-container post-content-container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '3.5rem' }}>
-          <article style={{ minWidth: 0 }}>
+        <div className="post-detail-layout">
+          <article className="post-main-article">
             <div
               className="markdown-body"
               dangerouslySetInnerHTML={{ __html: contentHtml }}
@@ -94,7 +83,9 @@ export default async function PostPage({
             <CodeCopyButtons />
           </article>
 
-          <TOC />
+          <div className="post-toc-aside">
+            <TOC />
+          </div>
         </div>
       </div>
     </div>

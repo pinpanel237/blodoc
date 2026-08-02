@@ -478,3 +478,61 @@
 .markdown-body pre::-webkit-scrollbar-thumb:hover {
   background: rgba(216, 180, 254, 0.7) !important;
 }
+
+/* ==========================================================================
+   📱 마크다운 본문 모바일 화면 최적화 (Markdown Mobile Optimization)
+   ========================================================================== */
+
+/* 1. 마크다운 테이블 모바일 가로 스크롤 보장 */
+.markdown-body table {
+  display: block !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  word-break: normal !important;
+  white-space: nowrap !important;
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 0.6rem 1rem !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.markdown-body table th {
+  background: rgba(255, 255, 255, 0.05) !important;
+  font-weight: 700 !important;
+}
+
+/* 2. 코드 블록(pre) 모바일 패딩 및 폰트 크기 최적화 */
+@media (max-width: 768px) {
+  .markdown-body pre {
+    padding: 0.85rem 1rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .markdown-body pre code .line-number {
+    width: 1.8rem !important;
+    padding-right: 0.6rem !important;
+    font-size: 0.72rem !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .code-block-header {
+    padding: 0.4rem 0.6rem 0.4rem 0.8rem !important;
+  }
+  
+  .code-block-tag {
+    font-size: 0.68rem !important;
+    padding: 0.18rem 0.5rem !important;
+  }
+  
+  .code-copy-btn {
+    font-size: 0.68rem !important;
+    padding: 0.25rem 0.6rem !important;
+    min-height: 24px !important;
+  }
+}
+
+
