@@ -22,7 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const homeData = getHomePost();
-  const githubUrl = homeData.github || siteConfig.social.github;
+  const headerGithubUrl = homeData.github || siteConfig.social.github;
+  const footerGithubUrl = siteConfig.social.github;
   const blogName = homeData.blogName || siteConfig.title;
 
   const jsonLd = {
@@ -47,7 +48,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="ambient-glow" />
-        <Header blogName={blogName} />
+        <Header blogName={blogName} githubUrl={headerGithubUrl} />
         <main>{children}</main>
 
         {/* 🏛️ 슬림 가로 인라인 푸터 (GitHub 링크만 동적 커스텀 가능) */}
@@ -78,8 +79,8 @@ export default function RootLayout({
             <div className="slim-footer-links">
               <Link href="/">홈</Link>
               <Link href="/credits">저작권 안내</Link>
-              {githubUrl && (
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+              {footerGithubUrl && (
+                <a href={footerGithubUrl} target="_blank" rel="noopener noreferrer">
                   GitHub
                 </a>
               )}

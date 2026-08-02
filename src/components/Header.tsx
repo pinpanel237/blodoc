@@ -9,12 +9,14 @@ import { siteConfig } from '@/site.config';
 
 interface HeaderProps {
   blogName?: string;
+  githubUrl?: string;
 }
 
-export default function Header({ blogName }: HeaderProps) {
+export default function Header({ blogName, githubUrl }: HeaderProps) {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const displayGithubUrl = githubUrl || siteConfig.social.github;
 
   return (
     <>
@@ -47,9 +49,9 @@ export default function Header({ blogName }: HeaderProps) {
               <span className="search-btn-label">검색</span>
             </button>
 
-            {siteConfig.social.github && (
+            {displayGithubUrl && (
               <a
-                href={siteConfig.social.github}
+                href={displayGithubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nav-item"
