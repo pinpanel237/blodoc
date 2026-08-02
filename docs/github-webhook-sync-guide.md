@@ -31,12 +31,19 @@ flowchart LR
 5. 생성된 **Deploy Hook URL**을 복사합니다. 
    *(예: `https://api.vercel.com/v1/integrations/deploy/prj_xxxx/xxxx`)*
 
+> [!IMPORTANT]
+> **캐시 방지 파라미터 필수 추가**
+> Vercel은 빌드 속도 단축을 위해 빌드 캐시를 적극적으로 사용합니다. 마크다운 파일만 변경된 상태에서 웹훅이 호출되면, Next.js의 빌드 캐시로 인해 변경된 콘텐츠가 정적 페이지(SSG)에 반영되지 않을 수 있습니다.
+> 이를 방지하려면 복사한 URL 끝에 반드시 `?buildCache=false` 쿼리 파라미터를 덧붙여 사용해야 합니다.
+> * **수정된 URL 예시:** `https://api.vercel.com/v1/integrations/deploy/prj_xxxx/xxxx?buildCache=false`
+
 ### 2단계. GitHub 게시글 저장소에 Webhook 설정하기
 1. 작성한 옵시디언 마크다운 노트가 업로드된 **GitHub 게시글 저장소**로 이동합니다.
 2. 저장소 상단의 **Settings** -> 좌측 메뉴에서 **Webhooks**로 이동합니다.
 3. 우측 상단의 **Add webhook** 버튼을 클릭합니다.
 4. 아래 설정을 입력합니다:
-   - **Payload URL**: 1단계에서 복사한 Vercel Deploy Hook URL을 붙여넣습니다.
+   - **Payload URL**: 1단계에서 복사한 Vercel Deploy Hook URL 끝에 `?buildCache=false`를 추가하여 붙여넣습니다.
+     *(예: `https://api.vercel.com/v1/integrations/deploy/prj_xxxx/xxxx?buildCache=false`)*
    - **Content type**: `application/json`으로 선택합니다.
    - **Secret**: 비워둡니다.
    - **Which events would you like to trigger this webhook?**: `Just the push event.`를 선택합니다.

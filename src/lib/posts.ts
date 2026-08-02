@@ -24,6 +24,7 @@ export interface HomePostData {
   description: string;
   github?: string;
   content?: string;
+  blogName?: string;
 }
 
 export interface LayoutPageData {
@@ -32,8 +33,8 @@ export interface LayoutPageData {
   content: string;
 }
 
-const postsDirectory = path.join(process.cwd(), 'content', 'posts');
-const layoutDirectory = path.join(process.cwd(), 'content', 'layout');
+const postsDirectory = path.join(process.cwd(), 'contents', 'posts');
+const layoutDirectory = path.join(process.cwd(), 'contents', 'layout');
 
 function ensureDirectoriesExist() {
   if (!fs.existsSync(postsDirectory)) {
@@ -125,6 +126,7 @@ export function getHomePost(): HomePostData {
       title: data.title || defaultHome.title,
       description: data.summary || data.description || content.trim() || defaultHome.description,
       github: data.github || undefined,
+      blogName: data.blogName || undefined,
       content: content.trim(),
     };
   } catch (error) {

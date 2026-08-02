@@ -290,6 +290,18 @@
   border: none !important;
 }
 
+.lang-tag-yaml {
+  background: #FEF08A !important;
+  color: #713F12 !important;
+  border: none !important;
+}
+
+.lang-tag-text {
+  background: #E2E8F0 !important;
+  color: #334155 !important;
+  border: none !important;
+}
+
 /* 🖱️ 헤더 바 내부에 배치되는 복사 버튼 */
 .code-copy-btn {
   position: relative !important;

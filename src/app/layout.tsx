@@ -23,11 +23,12 @@ export default function RootLayout({
 }) {
   const homeData = getHomePost();
   const githubUrl = homeData.github || siteConfig.social.github;
+  const blogName = homeData.blogName || siteConfig.title;
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: siteConfig.title,
+    name: blogName,
     description: siteConfig.description,
     url: siteConfig.domain,
     author: {
@@ -46,7 +47,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="ambient-glow" />
-        <Header />
+        <Header blogName={blogName} />
         <main>{children}</main>
 
         {/* 🏛️ 슬림 가로 인라인 푸터 (GitHub 링크만 동적 커스텀 가능) */}
@@ -54,10 +55,10 @@ export default function RootLayout({
           <div className="slim-footer-inner">
             <div className="slim-footer-left">
               <span className="logo-text" style={{ fontSize: '1.1rem' }}>
-                {siteConfig.title}
+                {blogName}
               </span>
               <span className="footer-copyright">
-                © {new Date().getFullYear()} {siteConfig.title}. All rights reserved.
+                © {new Date().getFullYear()} {blogName}. All rights reserved.
               </span>
               {siteConfig.credits.showTemplateCredit && (
                 <span className="footer-credit">

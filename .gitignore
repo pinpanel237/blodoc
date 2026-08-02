@@ -28,7 +28,7 @@
 next-env.d.ts
 
 # build temp assets
-# public/assets (copied from content/assets during build)
+# public/assets (copied from contents/assets during build)
 
 # python virtual environment & cache
 .venv/

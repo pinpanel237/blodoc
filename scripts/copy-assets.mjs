@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const contentDir = path.join(process.cwd(), 'content');
+const contentDir = path.join(process.cwd(), 'contents');
 const destAssetsDir = path.join(process.cwd(), 'public', 'assets');
 
 const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.avif', '.ico']);

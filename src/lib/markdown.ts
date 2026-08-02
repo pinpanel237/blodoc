@@ -11,14 +11,14 @@ const _TAILWIND_SAFELIST = [
   'code-block-header', 'code-block-header-left', 'code-block-tag', 'tag-label',
   'lang-tag-js', 'lang-tag-jsx', 'lang-tag-ts', 'lang-tag-tsx', 'lang-tag-python',
   'lang-tag-html', 'lang-tag-css', 'lang-tag-json', 'lang-tag-bash', 'lang-tag-sql',
-  'lang-tag-cpp', 'lang-tag-rust', 'lang-tag-go', 'lang-tag-java', 'code-copy-btn',
-  'copied', 'code-line', 'line-number', 'line-content', 'hljs', 'hljs-keyword',
-  'hljs-selector-tag', 'hljs-subst', 'hljs-string', 'hljs-doctag', 'hljs-regexp',
-  'hljs-title', 'hljs-section', 'hljs-selector-id', 'function_', 'hljs-number',
-  'hljs-literal', 'hljs-variable', 'hljs-template-variable', 'hljs-attribute',
-  'hljs-attr', 'hljs-property', 'hljs-type', 'hljs-params', 'hljs-comment',
-  'hljs-quote', 'hljs-symbol', 'hljs-bullet', 'hljs-link', 'hljs-tag',
-  'hljs-name', 'hljs-punctuation',
+  'lang-tag-cpp', 'lang-tag-rust', 'lang-tag-go', 'lang-tag-java', 'lang-tag-yaml',
+  'lang-tag-text', 'code-copy-btn', 'copied', 'code-line', 'line-number',
+  'line-content', 'hljs', 'hljs-keyword', 'hljs-selector-tag', 'hljs-subst',
+  'hljs-string', 'hljs-doctag', 'hljs-regexp', 'hljs-title', 'hljs-section',
+  'hljs-selector-id', 'function_', 'hljs-number', 'hljs-literal', 'hljs-variable',
+  'hljs-template-variable', 'hljs-attribute', 'hljs-attr', 'hljs-property',
+  'hljs-type', 'hljs-params', 'hljs-comment', 'hljs-quote', 'hljs-symbol',
+  'hljs-bullet', 'hljs-link', 'hljs-tag', 'hljs-name', 'hljs-punctuation',
 ];
 
 // 언어 표시명 및 키 표준화 맵
@@ -57,8 +57,10 @@ const LANGUAGE_MAP: Record<string, { label: string; key: string }> = {
   kotlin: { label: 'KOTLIN', key: 'java' },
   md: { label: 'MARKDOWN', key: 'md' },
   markdown: { label: 'MARKDOWN', key: 'md' },
-  yml: { label: 'YAML', key: 'json' },
-  yaml: { label: 'YAML', key: 'json' },
+  yml: { label: 'YAML', key: 'yaml' },
+  yaml: { label: 'YAML', key: 'yaml' },
+  text: { label: 'TEXT', key: 'text' },
+  txt: { label: 'TEXT', key: 'text' },
 };
 
 /**
@@ -127,13 +129,15 @@ function processCodeBlocks(htmlContent: string): string {
       }
     }
 
-    if (!rawLang) {
+    // 만약 언어가 지정되지 않았거나 지원하지 않는 잘 모르는 언어인 경우 'text'로 표시
+    const isSupported = rawLang && (LANGUAGE_MAP[rawLang] || (hljs.getLanguage && hljs.getLanguage(rawLang)));
+    if (!isSupported) {
       rawLang = 'text';
     }
 
     const langInfo = LANGUAGE_MAP[rawLang] || {
-      label: rawLang !== 'text' ? rawLang.toUpperCase() : 'CODE',
-      key: rawLang,
+      label: 'TEXT',
+      key: 'text',
     };
 
     let highlightedCode = '';
@@ -143,18 +147,18 @@ function processCodeBlocks(htmlContent: string): string {
       try {
         highlightedCode = hljs.highlight(unescapedCode, { language: rawLang }).value;
       } catch {
-        highlightedCode = hljs.highlightAuto(unescapedCode).value;
-      }
-    } else {
-      try {
-        const autoResult = hljs.highlightAuto(unescapedCode);
-        highlightedCode = autoResult.value;
-      } catch {
+        // highlight 에러 시 safe fallback (escaping)
         highlightedCode = unescapedCode
           .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;');
       }
+    } else {
+      // text이거나 잘 모르는 언어인 경우 highlightAuto 대신 plain text로 escaping만 적용하여 표시
+      highlightedCode = unescapedCode
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
     }
 
     const lineWrappedHtml = wrapCodeLines(highlightedCode);

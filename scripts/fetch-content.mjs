@@ -4,17 +4,17 @@ import path from 'path';
 
 /**
  * 환경 변수 CONTENT_GIT_REPO 가 설정되어 있는 경우,
- * 빌드 시점에 원격 Obsidian 마크다운 저장소를 content/ 폴더로 clone 합니다.
+ * 빌드 시점에 원격 Obsidian 마크다운 저장소를 contents/ 폴더로 clone 합니다.
  */
 const repoUrl = process.env.CONTENT_GIT_REPO;
-const contentDir = path.join(process.cwd(), 'content');
+const contentDir = path.join(process.cwd(), 'contents');
 
 if (repoUrl) {
   console.log(`🚀 [fetch-content] 원격 Git 저장소로부터 콘텐츠 다운로드 시도: ${repoUrl}`);
 
-  // 기존 content 폴더가 존재하면 Clean Up
+  // 기존 contents 폴더가 존재하면 Clean Up
   if (fs.existsSync(contentDir)) {
-    console.log('🧹 [fetch-content] 기존 content/ 폴더 정리 중...');
+    console.log('🧹 [fetch-content] 기존 contents/ 폴더 정리 중...');
     fs.rmSync(contentDir, { recursive: true, force: true });
   }
 

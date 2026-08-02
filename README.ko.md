@@ -42,18 +42,18 @@ npm run build
 
 ## 마크다운 작성 및 관리 구조
 
-- **일반 블로그 포스트**: `content/posts/*.md`에 마크다운 문서를 작성합니다. (하위 서브 폴더 분류도 자동 지원)
-- **메인 배너 & 레이아웃 설정**: `content/layout/home.md` 문서에서 메인 배너 대제목, 설명글, GitHub 링크를 변경할 수 있습니다.
+- **일반 블로그 포스트**: `contents/posts/*.md`에 마크다운 문서를 작성합니다. (하위 서브 폴더 분류도 자동 지원)
+- **메인 배너 & 레이아웃 설정**: `contents/layout/home.md` 문서에서 메인 배너 대제목, 설명글, GitHub 링크를 변경할 수 있습니다.
 - **첨부 이미지 관리**:
-  - **단일 에셋 폴더 방식**: `content/assets/photo.png`
-  - **게시글별 서브폴더 방식 (권장)**: `content/assets/게시글명/photo.png` 또는 `content/posts/게시글명/photo.png`
+  - **단일 에셋 폴더 방식**: `contents/assets/photo.png`
+  - **게시글별 서브폴더 방식 (권장)**: `contents/assets/게시글명/photo.png` 또는 `contents/posts/게시글명/photo.png`
   - 이미지 파일은 빌드 시 `public/assets/` 이하 동일 구조로 자동 재귀 복사되어 `![[게시글명/photo.png]]` 형태로 자연스럽게 연동됩니다.
 
 ---
 
-## 메인 배너 문구 및 레이아웃 설정 (`content/layout/home.md`)
+## 메인 배너 문구 및 레이아웃 설정 (`contents/layout/home.md`)
 
-`content/layout/home.md` 문서의 Frontmatter(YAML)를 수정하여 블로그 상단 히어로 배너의 문구 및 링크를 설정할 수 있습니다:
+`contents/layout/home.md` 문서의 Frontmatter(YAML)를 수정하여 블로그 상단 히어로 배너의 문구 및 링크를 설정할 수 있습니다:
 
 ```yaml
 ---
@@ -68,8 +68,8 @@ github: https://github.com/your-username/blodoc   # GitHub 프로필/저장소 �
 ## 콘텐츠 작성, 로컬 테스트 및 실제 운영 사용법
 
 ### 1. 로컬 테스트 (Local Development)
-- **포스트 작성**: `content/posts/*.md` 위치에 노트를 작성합니다. (카테고리, 태그, 날짜 등 Frontmatter 입력)
-- **이미지 첨부**: `content/assets/` 폴더에 이미지를 넣으면 `![[photo.png]]` 구문이 자동 연동됩니다.
+- **포스트 작성**: `contents/posts/*.md` 위치에 노트를 작성합니다. (카테고리, 태그, 날짜 등 Frontmatter 입력)
+- **이미지 첨부**: `contents/assets/` 폴더에 이미지를 넣으면 `![[photo.png]]` 구문이 자동 연동됩니다.
 - **로컬 서버 실행**:
   ```bash
   npm run dev
@@ -102,7 +102,7 @@ github: https://github.com/your-username/blodoc   # GitHub 프로필/저장소 �
 
 > [!TIP]
 > **원격 콘텐츠 Git 저장소 연동 (`CONTENT_GIT_REPO`)**:
-> `CONTENT_GIT_REPO`가 설정되어 있으면, 빌드 시점(`prebuild`)에 해당 원격 Git 저장소를 `content/` 폴더로 자동 Clone받아 정적 사이트를 빌드합니다. 환경 변수가 비어 있으면 기존 로컬 `/content` 폴더를 사용하여 테스트합니다.
+> `CONTENT_GIT_REPO`가 설정되어 있으면, 빌드 시점(`prebuild`)에 해당 원격 Git 저장소를 `contents/` 폴더로 자동 Clone받아 정적 사이트를 빌드합니다. 환경 변수가 비어 있으면 기존 로컬 `/contents` 폴더를 사용하여 테스트합니다.
 
 ### 2. 로컬 환경 변수 설정 (`.env.local`)
 프로젝트 루트 디렉토리에 `.env.local` 파일 생성:

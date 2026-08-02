@@ -42,18 +42,18 @@ npm run build
 
 ## Content Management
 
-- **Blog Posts**: Add your markdown notes under `content/posts/*.md` (subdirectories supported).
-- **Layout & Home Config**: Customize main banner text, description, and GitHub links via `content/layout/home.md`.
+- **Blog Posts**: Add your markdown notes under `contents/posts/*.md` (subdirectories supported).
+- **Layout & Home Config**: Customize main banner text, description, and GitHub links via `contents/layout/home.md`.
 - **Image Assets**:
-  - **Single Assets Directory**: `content/assets/photo.png`
-  - **Per-Post Subdirectories (Recommended)**: `content/assets/post-name/photo.png` or `content/posts/post-name/photo.png`
+  - **Single Assets Directory**: `contents/assets/photo.png`
+  - **Per-Post Subdirectories (Recommended)**: `contents/assets/post-name/photo.png` or `contents/posts/post-name/photo.png`
   - Images are automatically copied recursively to `public/assets/` during build and seamlessly linked via `![[post-name/photo.png]]` or relative paths.
 
 ---
 
-## Main Banner & Layout Config (`content/layout/home.md`)
+## Main Banner & Layout Config (`contents/layout/home.md`)
 
-Edit Frontmatter (YAML) in `content/layout/home.md` to customize hero banner text and profile links:
+Edit Frontmatter (YAML) in `contents/layout/home.md` to customize hero banner text and profile links:
 
 ```yaml
 ---
@@ -68,8 +68,8 @@ github: https://github.com/your-username/blodoc   # GitHub profile/repo link
 ## Content Writing, Local Testing & Production Workflow
 
 ### 1. Local Development & Testing
-- **Write Posts**: Create markdown files under `content/posts/*.md` with Frontmatter (`category`, `tags`, `date`).
-- **Attach Images**: Add images in `content/assets/`, which automatically links `![[photo.png]]` syntax.
+- **Write Posts**: Create markdown files under `contents/posts/*.md` with Frontmatter (`category`, `tags`, `date`).
+- **Attach Images**: Add images in `contents/assets/`, which automatically links `![[photo.png]]` syntax.
 - **Run Local Server**:
   ```bash
   npm run dev
@@ -102,7 +102,7 @@ Use environment variables to configure site domain URLs and remote Obsidian Git 
 
 > [!TIP]
 > **Remote Content Git Repo (`CONTENT_GIT_REPO`)**:
-> If `CONTENT_GIT_REPO` is specified, the build process (`prebuild`) will automatically clone the remote repository into the `content/` folder before generating static HTML pages. If left unset, it falls back to using local `/content` files for testing.
+> If `CONTENT_GIT_REPO` is specified, the build process (`prebuild`) will automatically clone the remote repository into the `contents/` folder before generating static HTML pages. If left unset, it falls back to using local `/contents` files for testing.
 
 ### 2. Local Environment Setup (`.env.local`)
 Create `.env.local` in the project root:

@@ -16,8 +16,8 @@ export const siteConfig = {
     license: 'MIT License',
   },
   obsidian: {
-    postsDir: 'content/posts',
-    assetsDir: 'content/assets',
+    postsDir: 'contents/posts',
+    assetsDir: 'contents/assets',
   },
   // 통계 및 수집 기능 활성화/비활성화 스위치 (On/Off)
   analytics: {

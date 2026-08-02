@@ -7,7 +7,11 @@ import ThemeToggle from './ThemeToggle';
 import SearchModal from './SearchModal';
 import { siteConfig } from '@/site.config';
 
-export default function Header() {
+interface HeaderProps {
+  blogName?: string;
+}
+
+export default function Header({ blogName }: HeaderProps) {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -17,7 +21,7 @@ export default function Header() {
       <header className={`site-header ${isHomePage ? 'header-on-home' : 'header-on-post'}`}>
         <div className="header-container">
           <Link href="/" className="logo-text">
-            {siteConfig.title}
+            {blogName || siteConfig.title}
           </Link>
 
           <nav className="nav-links">

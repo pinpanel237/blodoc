@@ -41,12 +41,12 @@
 
 1. **프레임워크**: Next.js 14+ (App Router, TypeScript)
 2. **렌더링 모드**: **Pure SSG (Static Site Generation)**
-   - `content/posts/` 폴더 내의 모든 마크다운 파일은 빌드 시점에 `generateStaticParams()`를 통해 정적 HTML로 생성되어야 합니다.
+   - `contents/posts/` 폴더 내의 모든 마크다운 파일은 빌드 시점에 `generateStaticParams()`를 통해 정적 HTML로 생성되어야 합니다.
    - Vercel 서버리스 런타임 환경에서 `fs` 파일 접근 오류를 방지하기 위해 `export const dynamic = 'force-static'`을 반드시 적용합니다.
 3. **디자인 시스템**: **Astryx Design System** (`@astryxdesign/core`, `@astryxdesign/theme-neutral`, `@astryxdesign/cli`)
 4. **이미지 & 에셋 파이프라인**:
-   - 옵시디언 첨부 이미지는 `content/assets/` 폴더에 동기화됩니다.
-   - 빌드 스크립트 `scripts/copy-assets.mjs`가 `content/assets/` $\rightarrow$ `public/assets/`로 파일을 자동 복사합니다.
+   - 옵시디언 첨부 이미지는 `contents/assets/` 폴더에 동기화됩니다.
+   - 빌드 스크립트 `scripts/copy-assets.mjs`가 `contents/assets/` $\rightarrow$ `public/assets/`로 파일을 자동 복사합니다.
    - 커스텀 파서가 마크다운 내 `![[photo.png]]` 또는 `![](assets/photo.png)`를 `<img src="/assets/photo.png" />` 경로로 자동 변환합니다.
 5. **Obsidian 특화 파서**:
    - `gray-matter`: Frontmatter (제목, 날짜, 태그, 카테고리, 임시저장 여부) 추출.
@@ -61,8 +61,8 @@
 - `docs/`: AI 에이전트 및 작성자가 생성한 모든 시스템 분석, 정리 문서, 기능 로드맵이 위치하는 디렉토리입니다.
   - `docs/blog-architecture-analysis.md`: 상세 시스템 아키텍처 분석 및 Vercel 문제 해결 가이드 문서.
   - `docs/feature-roadmap.md`: 블로그 기능 로드맵 및 백로그 문서.
-- `content/posts/`: 원본 옵시디언 마크다운 포스트 파일들.
-- `content/assets/`: 원본 옵시디언 첨부 이미지 파일들.
+- `contents/posts/`: 원본 옵시디언 마크다운 포스트 파일들.
+- `contents/assets/`: 원본 옵시디언 첨부 이미지 파일들.
 - `src/lib/posts.ts`: 마크다운 Safe Parsing 및 SSG 데이터 추출 로직.
 - `src/lib/obsidian.ts`: 옵시디언 전용 커스텀 파서 로직.
 
@@ -73,6 +73,6 @@
 1. **모든 문서는 한글 작성**: 모든 가이드, 분석서, 문서화 및 코드 주석은 한글로 작성합니다.
 2. **정리/분석 문서 저장 위치**: AI 에이전트가 새롭게 작성하는 모든 정리 문서, 시스템 분석서, 로드맵 문서 등은 반드시 `docs/` 디렉토리 내에 생성 및 저장합니다.
 3. **🚨 자의적 Git 커밋/푸시 절대 금지 (개별 매회 승인)**: 사용자가 매 수정 건마다 "커밋/푸시해라"고 직접 명시적 지시를 내리기 전까지 `git commit`이나 `git push`를 자의적으로 절대로 실행하지 않습니다. 로컬 변경 상태를 보고하고 사용자의 지시를 기다립니다.
-4. **원본 콘텐츠 직접 수정 금지**: `content/` 폴더는 사용자가 옵시디언 앱에서 작성하여 Push하는 영역이므로 구조를 훼손하지 않습니다.
+4. **원본 콘텐츠 직접 수정 금지**: `contents/` 폴더는 사용자가 옵시디언 앱에서 작성하여 Push하는 영역이므로 구조를 훼손하지 않습니다.
 5. **안전한 파싱 (Safe Parsing) 준수**: 마크다운 파서 및 Frontmatter 파싱 시 에러 예방 가드를 적용하여 잘못된 마크다운으로 인해 빌드가 깨지지 않도록 합니다.
 6. **Pure SSG 준수**: 런타임 서버리스 동적 파일 파싱 로직을 절대 도입하지 않습니다.
